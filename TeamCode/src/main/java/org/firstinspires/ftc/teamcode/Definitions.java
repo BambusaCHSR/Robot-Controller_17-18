@@ -2,201 +2,154 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.UltrasonicSensor;
+import com.qualcomm.robotcore.hardware.configuration.MotorConfiguration;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+
 /**
- * Created by Elijah Sauder on 1/20/17.
+ * Created by Bambusa on 11/11/17.
  **/
 
-/* Creates the definition java file (Class) */
-public class Definitions {
-    
-    /** Initiates all the motors, servos, and sensors **/
-    /*Initiates all the motors */
-    //Initiates the drive motors
-    DcMotor motorDriveFrontRight;
-    DcMotor motorDriveFrontLeft;
-    DcMotor motorDriveBackRight;
-    DcMotor motorDriveBackLeft;
+class Definitions {
 
-    //-----------------------------------------------//
-    
-    /* Initiates all the servos */
-    //initiates the button pressing servos
-    Servo servoJewelHitterExtender;
-    Servo servoJewelHitter;
-
-    /* Initiates all the sensors */
-    //Initiates the color sensors
-    ColorSensor sensorJewelColor;
-
-    //initiates the distance sensors
-    UltrasonicSensor sensorDistanceArm;
-    
-    //initiates the gyro sensor
-    GyroSensor sensorGyro;
-
-    //===============================================//
-    
-    /** Initiates variables **/
-    //Initiates local variables that are used in TeleOp
-    float x, y, r, m, n;
-
-    //===============================================//
-
-    /** creates all the defined actions called upon in the other programs **/
-    /* Creates a hardware map */
-    public void init(HardwareMap Map) {
-        /** Initiates all the motor, servo, and sensor names **/
-        /* Initiates all the motors */
-        //initiates the drive motor names
-        motorDriveFrontRight = Map.dcMotor.get("motorDriveFrontRight");
-        motorDriveFrontLeft = Map.dcMotor.get("motorDriveFrontLeft");
-        motorDriveBackRight = Map.dcMotor.get("motorDriveBackRight");
-        motorDriveBackLeft = Map.dcMotor.get("motorDriveBackLeft");
-
-        //--------------------------------------------------------//
-
-        /*Initiates the names of all the servos*/
-        //sets name for Servos
-        servoJewelHitterExtender = Map.servo.get("jewelHitterExtender");
-        servoJewelHitter = Map.servo.get("JewelHitter");
-
-        //--------------------------------------------------------//
-
-        /*Initiates the names of all the sensors*/
-        //Initiates the names of the color sensors
-        sensorJewelColor = Map.colorSensor.get("sensorJewelColor");
-
-        //initiates the names of the distance sensors
-        sensorDistanceArm = Map.ultrasonicSensor.get("sensorDistanceArm");
-
-        //initiates the names of the gyro sensors
-        sensorGyro = Map.gyroSensor.get("sensorGyro");
-    }
-
-    /*-----------------------------------------------------------------------*/
-    /* ********************** */ /**Autonomous**/ /* *********************** */
-    /*-----------------------------------------------------------------------*/
+    private MainOpMode opmode = new MainOpMode();
 
     /**
-     * Movement Directions
-     **/
-    void setDriveForward() {
-        motorDriveFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        motorDriveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
-        motorDriveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        motorDriveBackLeft.setDirection(DcMotor.Direction.FORWARD);
+     * ---------------
+     * initializations
+     * ---------------
+     */
+    /* Tells the program what to call the motors whenever you use them (call them) in the code. */
 
+    //initializes the Drive Motors.
+    DcMotor driveFrontRight = null;
+    DcMotor driveFrontLeft = null;
+    DcMotor driveBackRight = null;
+    DcMotor driveBackLeft = null;
+
+    MotorConfiguration armLower = null;
+    //initializes Relic arm motors.
+    DcMotor armLower1 = null;
+    DcMotor armLower2 = null;
+    DcMotor armUpper = null;
+
+    //initializes the glyph lifter motor.
+    DcMotor winch = null;
+
+    //initializes servos for grabbing the glyphs.
+    Servo glyphGrabLeft = null;
+    Servo glyphGrabRight = null;
+
+    //initializes servo for hitting the jewel in autonomous.
+    Servo jewels = null;
+
+    //initializes sensor for detecting the jewel color
+    ColorSensor jewelColor = null;
+
+    VuforiaLocalizer vuforia;
+
+    private int cameraMonitorViewId;
+
+    void init(HardwareMap Map) {
+
+        /** -----------
+         * Hardware Map
+         * ------------*/
+        /* Lets the app communicate (See) the motors, servos, and sensors from the robot configuration */
+
+        //Drive Motors.
+        driveFrontRight = Map.dcMotor.get("driveFrontRight");
+        driveFrontLeft = Map.dcMotor.get("driveFrontLeft");
+        driveBackRight = Map.dcMotor.get("driveBackRight");
+        driveBackLeft = Map.dcMotor.get("driveBackLeft");
+
+        //Relic arm Motors.
+        armLower1 = Map.dcMotor.get("armLower1");
+        armLower2 = Map.dcMotor.get("armLower2");
+        armUpper = Map.dcMotor.get("armUpper");
+
+        //Glyph lifter Motors.
+        winch = Map.dcMotor.get("winch");
+
+        //Servos for grabbing Glyphs.
+        glyphGrabLeft = Map.servo.get("glyphGrabLeft");
+        glyphGrabRight = Map.servo.get("glyphGrabRight");
+
+        //Servo for hitting the jewel off in autonomous.
+        jewels = Map.servo.get("jewels");
+
+        //sensor for detecting the jewel color.
+        jewelColor = Map.colorSensor.get("jewelColor");
+
+        cameraMonitorViewId = Map.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", Map.appContext.getPackageName());
     }
 
-    void setDriveBackward() {
-        motorDriveFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        motorDriveFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorDriveBackRight.setDirection(DcMotor.Direction.FORWARD);
-        motorDriveBackLeft.setDirection(DcMotor.Direction.REVERSE);
-
+    //function used to set the default servo positions for all the servos.
+    void servoInit() {
+        //initialize servo positions
+        glyphGrabLeft.setPosition(1);
+        glyphGrabRight.setPosition(0);
+        jewels.setPosition(0.96);
     }
 
-    void setDriveRight() {
-        motorDriveFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        motorDriveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
-        motorDriveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        motorDriveBackLeft.setDirection(DcMotor.Direction.REVERSE);
-
+    void vuforiaInit() {
+        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
+        parameters.vuforiaLicenseKey = "AS/00FX/////AAAAGRywycu7JEUJh4rz/rwORDkZJabbBKzxMuMKtBDf4H4wwDJtDTdfM4a0JXDJiPhDkK9SUSl9j8qDz8nbFunZwugJW7SdZvehZLe9J7Irk1Eu6w4+gmSEIvRBSxite8W+7xjTTtLyvMgxKbMacL8k0uuhfFJzwTS3qZ5FCm8HP7F8jqXgH5e2LLcRyJ+MYdNqPPx7wpISBVFY3rYGqxFJgAs1S1dReiziGOeyckCt1pcJXA6IroX5mgAVNwLWx9Wafoe3jd3dNdD+dxSep2E1MhmcA+WIcKIZ9615uMPfon5M7fyzjB6CFu5srJTpcgoVPbbr6LAZt7WiNPLLCuoFNx246V29fO1DeiTErTCbuL/Q";
+        parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
+        this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
     }
 
-    void setDriveLeft() {
-        motorDriveFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        motorDriveFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        motorDriveBackRight.setDirection(DcMotor.Direction.FORWARD);
-        motorDriveBackLeft.setDirection(DcMotor.Direction.FORWARD);
-
+    void rotLeft(double power) {
+        driveFrontRight.setPower(power);
+        driveFrontLeft.setPower(power);
+        driveBackRight.setPower(power);
+        driveBackLeft.setPower(power);
     }
 
-    /**
-     * Rotate
-     **/
-    void setDriveRotateLeft() {
-        motorDriveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorDriveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorDriveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorDriveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+    void rotRight(double power) {
+        driveFrontRight.setPower(-power);
+        driveFrontLeft.setPower(-power);
+        driveBackRight.setPower(-power);
+        driveBackLeft.setPower(-power);
     }
 
-    void setDriveRotateRight() {
-        motorDriveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorDriveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorDriveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        motorDriveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
+    void cLed(boolean cLed) {
+        jewelColor.enableLed(cLed);
     }
 
-    /**
-     * restart encoders
-     **/
-    void restartDriveEncoders() {
-        motorDriveFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorDriveFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorDriveBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorDriveBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+    void encoderInit() {
+        driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    /**
-     * movement distance
-     **/
-    void setDriveDistance(int distance) {
-        motorDriveFrontLeft.setTargetPosition(distance);
-        motorDriveFrontRight.setTargetPosition(distance);
-        motorDriveBackLeft.setTargetPosition(distance);
-        motorDriveBackRight.setTargetPosition(distance);
-
+    void setPos(int pos) {
+        driveFrontRight.setTargetPosition(pos);
+        driveFrontLeft.setTargetPosition(pos);
+        driveBackRight.setTargetPosition(pos);
+        driveBackLeft.setTargetPosition(pos);
     }
 
-    /**
-     * run to position
-     **/
-    void runToPosition() {
-        motorDriveFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorDriveFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorDriveBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        motorDriveBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    void runToPos() {
+        driveFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    /**
-     * drive speed
-     **/
-    void setPower(double power) {
-        motorDriveFrontLeft.setPower(Range.clip(power,-1.0,1.0));
-        motorDriveFrontRight.setPower(Range.clip(power,-1.0,1.0));
-        motorDriveBackLeft.setPower(Range.clip(power,-1.0,1.0));
-        motorDriveBackRight.setPower(Range.clip(power,-1.0,1.0));
+    void resetEncoders() {
+        driveFrontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        driveFrontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        driveBackLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        driveBackRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
 
-    /**
-     * wait
-     **/
-
-    void waitForDriveMotorStop() {
-        while (true) {
-            if (!(motorDriveFrontLeft.isBusy())) break;
-        }
-    }
-
-    void driveForwardAndOrBack(int distance, double power) {
-        setDriveForward();
-        restartDriveEncoders();
-        setDriveDistance(distance);
-        runToPosition();
-        setPower(Range.clip(power,-1.0,1.0));
-        waitForDriveMotorStop();
-        setPower(0);
-    }
 }
 
 

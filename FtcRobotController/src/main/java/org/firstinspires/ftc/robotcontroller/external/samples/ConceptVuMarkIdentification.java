@@ -76,7 +76,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
-     **/
+     */
     VuforiaLocalizer vuforia;
 
     @Override public void runOpMode() {
@@ -118,7 +118,7 @@ public class ConceptVuMarkIdentification extends LinearOpMode {
          * in this data set: all three of the VuMarks in the game were created from this one template,
          * but differ in their instance id information.
          * @see VuMarkInstanceId
-         **/
+         */
         VuforiaTrackables relicTrackables = this.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
         relicTemplate.setName("relicVuMarkTemplate"); // can help in debugging; otherwise not necessary

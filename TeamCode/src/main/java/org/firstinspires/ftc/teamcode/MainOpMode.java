@@ -159,16 +159,16 @@ public class MainOpMode extends LinearOpMode {
 
             //Sets the movement of the glyph lifter to the two bumpers on the gamepad
             if (bumpR && bumpL) { //Adds a safety in case the gamepad operator presses both bumpers
-                robot.winch.setPower(0);
+                robot.lift.setPower(0);
             }
-            else if (bumpR && ! bumpL) { //Makes sure that only one of the bumpers is being pressed for it to raise.
-                robot.winch.setPower(-0.5);
+            else if (bumpR && !bumpL) { //Makes sure that only one of the bumpers is being pressed for it to raise.
+                robot.lift.setPower(-0.5);
             }
             else if (bumpL && !bumpR) { //Makes sure that only one of the bumpers is being pressed for it to lower.
-                robot.winch.setPower(0.5);
+                robot.lift.setPower(0.5);
             }
             else {                      //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
-                robot.winch.setPower(0);
+                robot.lift.setPower(0);
             }
 
             //Toggle for the glyph lifter

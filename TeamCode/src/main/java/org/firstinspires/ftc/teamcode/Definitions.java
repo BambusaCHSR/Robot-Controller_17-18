@@ -19,9 +19,6 @@ import java.util.Objects;
  **/
 
 class Definitions {
-
-    private MainOpMode opmode = new MainOpMode();
-
     /**
      * ---------------
      * initializations
@@ -42,7 +39,7 @@ class Definitions {
     DcMotor armUpper = null;
 
     //initializes the glyph lifter motor.
-    DcMotor winch = null;
+    DcMotor lift = null;
 
     //initializes servos for grabbing the glyphs.
     Servo glyphGrabLeft = null;
@@ -77,7 +74,7 @@ class Definitions {
         armUpper = Map.dcMotor.get("armUpper");
 
         //Glyph lifter Motors.
-        winch = Map.dcMotor.get("winch");
+        lift = Map.dcMotor.get("winch");
 
         //Servos for grabbing Glyphs.
         glyphGrabLeft = Map.servo.get("glyphGrabLeft");

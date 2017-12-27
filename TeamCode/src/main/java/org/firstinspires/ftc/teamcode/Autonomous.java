@@ -68,20 +68,12 @@ public class Autonomous extends LinearOpMode {
             if (!jewelGotten && AutoMode == 0) {
                 robot.jewels.setPosition(0.5);
                 if (robot.jewelColor.red() >= 5 && robot.jewelColor.blue() <= 2 && robot.jewelColor.green() <= 2) {
-                    robot.resetEncoders();
-                    robot.setPos(100);
-                    robot.runToPos();
-                    robot.rotLeft(0.3);
-                    robot.jewels.setPosition(0.96);
+                    robot.knockJewelOff("LEFT",100, 0, 0.5);
                     jewelGotten = true;
                     telemetry.addData("Jewel", "Gotten");
                 }
                 else if (robot.jewelColor.red() <= 2 && robot.jewelColor.blue() >= 5 && robot.jewelColor.green() <= 2) {
-                    robot.resetEncoders();
-                    robot.setPos(100);
-                    robot.runToPos();
-                    robot.rotRight(0.3);
-                    robot.jewels.setPosition(0.96);
+                    robot.knockJewelOff("RIGHT",100, 0, 0.5);
                     jewelGotten = true;
                     telemetry.addData("Jewel", "Gotten");
                 }

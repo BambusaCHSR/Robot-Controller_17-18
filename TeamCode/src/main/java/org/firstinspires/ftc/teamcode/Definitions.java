@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.MotorConfiguration;
@@ -10,6 +11,8 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+
+import java.util.Objects;
 
 /**
  * Created by Bambusa on 11/11/17.
@@ -104,18 +107,36 @@ class Definitions {
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
     }
 
-    void rotLeft(double power) {
+    void setDriveForward() {
+        driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+    }
+    void setDriveBackward() {
+        driveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+    void setRotLeft() {
+        driveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+    }
+    void setRotRight() {
+        driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        driveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+
+    void setPower(double power) {
         driveFrontRight.setPower(power);
         driveFrontLeft.setPower(power);
         driveBackRight.setPower(power);
         driveBackLeft.setPower(power);
-    }
-
-    void rotRight(double power) {
-        driveFrontRight.setPower(-power);
-        driveFrontLeft.setPower(-power);
-        driveBackRight.setPower(-power);
-        driveBackLeft.setPower(-power);
     }
 
     void cLed(boolean cLed) {
@@ -148,6 +169,36 @@ class Definitions {
         driveFrontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
         driveBackLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         driveBackRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
+    }
+
+    void waitForDriveMotorStop() {
+        while (true) {
+            if (!(driveFrontLeft.isBusy())) break;
+        }
+    }
+
+
+    void knockJewelOff(String whichJewel, int motorPos, double servoPos, double motorPower) {
+        if (whichJewel.equals("LEFT")) {
+            setRotLeft();
+            resetEncoders();
+            setPos(motorPos);
+            runToPos();
+            setPower(motorPower);
+            waitForDriveMotorStop();
+            setPower(0);
+            jewels.setPosition(servoPos);
+        }
+        else if (whichJewel.equals("RIGHT")) {
+            setRotRight();
+            resetEncoders();
+            setPos(motorPos);
+            runToPos();
+            setPower(motorPower);
+            waitForDriveMotorStop();
+            setPower(0);
+            jewels.setPosition(servoPos);
+        }
     }
 
 }

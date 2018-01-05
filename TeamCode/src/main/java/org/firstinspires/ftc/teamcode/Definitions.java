@@ -55,9 +55,6 @@ class Definitions {
 
     private int cameraMonitorViewId;
 
-    private waitForDriveMotors wait1 = new waitForDriveMotors();
-
-
     void init(HardwareMap Map) {
 
         /** -----------
@@ -171,16 +168,11 @@ class Definitions {
         driveBackRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
 
-    /*void waitForDriveMotorStop() {
+    void waitForDriveMotorStop() {
         while (true) {
             if (!(driveFrontLeft.isBusy())) break;
         }
-    }*/
-
-    void waitDriveStop() {
-        wait1.start();
     }
-
     void knockJewelOff(String whichJewel, int motorPos, double servoPos, double motorPower) {
         if (whichJewel.equals("LEFT")) {
             setRotLeft();
@@ -188,7 +180,7 @@ class Definitions {
             setPos(motorPos);
             runToPos();
             setPower(motorPower);
-            waitDriveStop();
+            waitForDriveMotorStop();
             setPower(0);
             jewels.setPosition(servoPos);
         }
@@ -198,22 +190,11 @@ class Definitions {
             setPos(motorPos);
             runToPos();
             setPower(motorPower);
-            waitDriveStop();
+            waitForDriveMotorStop();
             setPower(0);
             jewels.setPosition(servoPos);
         }
     }
 
-}
-
-class waitForDriveMotors extends Thread {
-    private Definitions robot = new Definitions();
-
-    @Override
-    public void run() {
-        while (robot.driveFrontLeft.isBusy() && robot.driveFrontRight.isBusy() && robot.driveBackLeft.isBusy() && robot.driveBackRight.isBusy()) {
-            if (!robot.driveFrontLeft.isBusy() && !robot.driveFrontRight.isBusy() && robot.driveBackLeft.isBusy() && robot.driveBackRight.isBusy()) break;
-        }
-    }
 }
 

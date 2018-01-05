@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * Created by Elijah Sauder on 1/4/2018.
  **/
@@ -40,5 +42,15 @@ class accessories extends Thread {
     @Override
     public void run(){
 
+    }
+}
+
+class opmode extends LinearOpMode {
+
+    @Override
+    public void runOpMode() throws InterruptedException {
+        while (opModeIsActive()) {
+
+        }
     }
 }

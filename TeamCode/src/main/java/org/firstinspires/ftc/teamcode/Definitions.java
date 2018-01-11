@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.configuration.MotorConfiguration;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-
-import java.util.Objects;
 
 /**
  * Created by Bambusa on 11/11/17.
@@ -27,10 +25,10 @@ class Definitions {
     /* Tells the program what to call the motors whenever you use them (call them) in the code. */
 
     //initializes the Drive Motors.
-    DcMotor driveFrontRight = null;
-    DcMotor driveFrontLeft = null;
-    DcMotor driveBackRight = null;
-    DcMotor driveBackLeft = null;
+    DcMotorEx driveFrontRight = null;
+    DcMotorEx driveFrontLeft = null;
+    DcMotorEx driveBackRight = null;
+    DcMotorEx driveBackLeft = null;
 
     MotorConfiguration armLower = null;
     //initializes Relic arm motors.
@@ -63,10 +61,10 @@ class Definitions {
         /* Lets the app communicate (See) the motors, servos, and sensors from the robot configuration */
 
         //Drive Motors.
-        driveFrontRight = Map.dcMotor.get("driveFrontRight");
-        driveFrontLeft = Map.dcMotor.get("driveFrontLeft");
-        driveBackRight = Map.dcMotor.get("driveBackRight");
-        driveBackLeft = Map.dcMotor.get("driveBackLeft");
+        driveFrontRight = (DcMotorEx)Map.dcMotor.get("driveFrontRight");
+        driveFrontLeft = (DcMotorEx)Map.dcMotor.get("driveFrontLeft");
+        driveBackRight = (DcMotorEx) Map.get("driveBackRight");
+        driveBackLeft = (DcMotorEx)Map.dcMotor.get("driveBackLeft");
 
         //Relic arm Motors.
         armLower1 = Map.dcMotor.get("armLower1");
@@ -110,18 +108,21 @@ class Definitions {
         driveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+
     void setDriveBackward() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
+
     void setRotLeft() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     }
+
     void setRotRight() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -148,6 +149,10 @@ class Definitions {
     }
 
     void setPos(int pos) {
+        double DFRpos = driveFrontRight.getCurrentPosition() + pos;
+        double DFLpos = driveFrontLeft.getCurrentPosition() + pos;
+        double DBRpos = driveBackRight.getCurrentPosition() + pos;
+        double DBLpos = driveBackLeft.getCurrentPosition() + pos;
         driveFrontRight.setTargetPosition(pos);
         driveFrontLeft.setTargetPosition(pos);
         driveBackRight.setTargetPosition(pos);
@@ -173,6 +178,7 @@ class Definitions {
             if (!(driveFrontLeft.isBusy())) break;
         }
     }
+
     void knockJewelOff(String whichJewel, int motorPos, double servoPos, double motorPower) {
         if (whichJewel.equals("LEFT")) {
             setRotLeft();
@@ -183,8 +189,7 @@ class Definitions {
             waitForDriveMotorStop();
             setPower(0);
             jewels.setPosition(servoPos);
-        }
-        else if (whichJewel.equals("RIGHT")) {
+        } else if (whichJewel.equals("RIGHT")) {
             setRotRight();
             resetEncoders();
             setPos(motorPos);
@@ -196,5 +201,24 @@ class Definitions {
         }
     }
 
+    void intmotor(AngleUnit testBR, AngleUnit testBL, AngleUnit testFR, AngleUnit testFL) {
+        driveFrontLeft.setMotorEnable();
+        driveFrontRight.setMotorEnable();
+        driveBackLeft.setMotorEnable();
+        driveBackRight.setMotorEnable();
+        boolean intt = false;
+        while(!intt) {
+            if (driveBackRight.getVelocity(testBR) == 0 && driveBackLeft.getVelocity(testBL) == 0
+                    && driveFrontRight.getVelocity(testFR) == 0 && driveFrontLeft.getVelocity(testFL) == 0) {
+                setPower(0);
+                resetEncoders();
+                intt=true;
+            }
+            else {
+                setPower(0.05);
+                intt=false;
+            }
+        }
+    }
 }
 

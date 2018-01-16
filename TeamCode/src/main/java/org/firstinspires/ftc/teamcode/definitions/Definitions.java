@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.definitions;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
  * Created by Bambusa on 11/11/17.
  **/
 
-class Definitions {
+public class Definitions {
     /**
      * ---------------
      * initializations
@@ -25,35 +25,35 @@ class Definitions {
     /* Tells the program what to call the motors whenever you use them (call them) in the code. */
 
     //initializes the Drive Motors.
-    DcMotorEx driveFrontRight = null;
-    DcMotorEx driveFrontLeft = null;
-    DcMotorEx driveBackRight = null;
-    DcMotorEx driveBackLeft = null;
+    public DcMotorEx driveFrontRight = null;
+    public DcMotorEx driveFrontLeft = null;
+    public DcMotorEx driveBackRight = null;
+    public DcMotorEx driveBackLeft = null;
 
-    MotorConfiguration armLower = null;
+    public MotorConfiguration armLower = null;
     //initializes Relic arm motors.
-    DcMotor armLower1 = null;
-    DcMotor armLower2 = null;
-    DcMotor armUpper = null;
+    public DcMotor armLower1 = null;
+    public DcMotor armLower2 = null;
+    public DcMotor armUpper = null;
 
     //initializes the glyph lifter motor.
-    DcMotor lift = null;
+    public DcMotor lift = null;
 
     //initializes servos for grabbing the glyphs.
-    Servo glyphGrabLeft = null;
-    Servo glyphGrabRight = null;
+    public Servo glyphGrabLeft = null;
+    public Servo glyphGrabRight = null;
 
     //initializes servo for hitting the jewel in autonomous.
-    Servo jewels = null;
+    public Servo jewels = null;
 
     //initializes sensor for detecting the jewel color
-    ColorSensor jewelColor = null;
+    public ColorSensor jewelColor = null;
 
-    VuforiaLocalizer vuforia;
+    public VuforiaLocalizer vuforia;
 
     private int cameraMonitorViewId;
 
-    void init(HardwareMap Map) {
+    public void init(HardwareMap Map) {
 
         /** -----------
          * Hardware Map
@@ -88,67 +88,67 @@ class Definitions {
     }
 
     //function used to set the default servo positions for all the servos.
-    void servoInit() {
+    public void servoInit() {
         //initialize servo positions
         glyphGrabLeft.setPosition(1);
         glyphGrabRight.setPosition(0);
         jewels.setPosition(0.96);
     }
 
-    void vuforiaInit() {
+    public void vuforiaInit() {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
         parameters.vuforiaLicenseKey = "AS/00FX/////AAAAGRywycu7JEUJh4rz/rwORDkZJabbBKzxMuMKtBDf4H4wwDJtDTdfM4a0JXDJiPhDkK9SUSl9j8qDz8nbFunZwugJW7SdZvehZLe9J7Irk1Eu6w4+gmSEIvRBSxite8W+7xjTTtLyvMgxKbMacL8k0uuhfFJzwTS3qZ5FCm8HP7F8jqXgH5e2LLcRyJ+MYdNqPPx7wpISBVFY3rYGqxFJgAs1S1dReiziGOeyckCt1pcJXA6IroX5mgAVNwLWx9Wafoe3jd3dNdD+dxSep2E1MhmcA+WIcKIZ9615uMPfon5M7fyzjB6CFu5srJTpcgoVPbbr6LAZt7WiNPLLCuoFNx246V29fO1DeiTErTCbuL/Q";
         parameters.cameraDirection = VuforiaLocalizer.CameraDirection.BACK;
         this.vuforia = ClassFactory.createVuforiaLocalizer(parameters);
     }
 
-    void setDriveForward() {
+    public void setDriveForward() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    void setDriveBackward() {
+    public void setDriveBackward() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    void setRotLeft() {
+    public void setRotLeft() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackRight.setDirection(DcMotorSimple.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    void setRotRight() {
+    public void setRotRight() {
         driveFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveFrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
         driveBackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    void setPower(double power) {
+    public void setPower(double power) {
         driveFrontRight.setPower(power);
         driveFrontLeft.setPower(power);
         driveBackRight.setPower(power);
         driveBackLeft.setPower(power);
     }
 
-    void cLed(boolean cLed) {
+    public void cLed(boolean cLed) {
         jewelColor.enableLed(cLed);
     }
 
-    void encoderInit() {
+    public void encoderInit() {
         driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    void setPos(int pos) {
+    public void setPos(int pos) {
         double DFRpos = driveFrontRight.getCurrentPosition() + pos;
         double DFLpos = driveFrontLeft.getCurrentPosition() + pos;
         double DBRpos = driveBackRight.getCurrentPosition() + pos;
@@ -159,27 +159,27 @@ class Definitions {
         driveBackLeft.setTargetPosition(pos);
     }
 
-    void runToPos() {
+    public void runToPos() {
         driveFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         driveBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    void resetEncoders() {
+    public void resetEncoders() {
         driveFrontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         driveFrontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
         driveBackLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
         driveBackRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
 
-    void waitForDriveMotorStop() {
+    public void waitForDriveMotorStop() {
         while (true) {
             if (!(driveFrontLeft.isBusy())) break;
         }
     }
 
-    void knockJewelOff(String whichJewel, int motorPos, double servoPos, double motorPower) {
+    public void knockJewelOff(String whichJewel, int motorPos, double servoPos, double motorPower) {
         if (whichJewel.equals("LEFT")) {
             setRotLeft();
             resetEncoders();
@@ -201,7 +201,7 @@ class Definitions {
         }
     }
 
-    void intmotor(AngleUnit testBR, AngleUnit testBL, AngleUnit testFR, AngleUnit testFL) {
+    public void intmotor(AngleUnit testBR, AngleUnit testBL, AngleUnit testFR, AngleUnit testFL) {
         driveFrontLeft.setMotorEnable();
         driveFrontRight.setMotorEnable();
         driveBackLeft.setMotorEnable();

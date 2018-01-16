@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+import com.qualcomm.robotcore.eventloop.opmode.*;
+import org.firstinspires.ftc.teamcode.definitions.Definitions;
 
 /**
  * Created by elijah on 12/9/17.
@@ -65,14 +67,15 @@ public class Autonomous extends LinearOpMode {
                 jewelGotten = false;
             }
 
+            //for red team
             if (!jewelGotten && AutoMode == 0) {
                 robot.jewels.setPosition(0.5);
-                if (robot.jewelColor.red() >= 5 && robot.jewelColor.blue() <= 2 && robot.jewelColor.green() <= 2) {
+                if (robot.jewelColor.red() > robot.jewelColor.blue()) {
                     robot.knockJewelOff("LEFT",100, 0, 0.5);
                     jewelGotten = true;
                     telemetry.addData("Jewel", "Gotten");
                 }
-                else if (robot.jewelColor.red() <= 2 && robot.jewelColor.blue() >= 5 && robot.jewelColor.green() <= 2) {
+                else if (robot.jewelColor.red() < robot.jewelColor.blue()) {
                     robot.knockJewelOff("RIGHT",100, 0, 0.5);
                     jewelGotten = true;
                     telemetry.addData("Jewel", "Gotten");

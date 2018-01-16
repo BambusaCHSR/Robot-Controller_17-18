@@ -48,6 +48,7 @@ public class Definitions {
 
     //initializes sensor for detecting the jewel color
     public ColorSensor jewelColor = null;
+    public ColorSensor teamColor = null;
 
     public VuforiaLocalizer vuforia;
 
@@ -83,6 +84,7 @@ public class Definitions {
 
         //sensor for detecting the jewel color.
         jewelColor = Map.colorSensor.get("jewelColor");
+        teamColor = Map.colorSensor.get("teamColor");
 
         cameraMonitorViewId = Map.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", Map.appContext.getPackageName());
     }
@@ -139,6 +141,7 @@ public class Definitions {
 
     public void cLed(boolean cLed) {
         jewelColor.enableLed(cLed);
+        teamColor.enableLed(cLed);
     }
 
     public void encoderInit() {
@@ -146,17 +149,76 @@ public class Definitions {
         driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        resetEncoders();
+    }
+
+    public void setPosINCH(int pos) {
+        int DFRpos = driveFrontRight.getCurrentPosition() + (pos*89);
+        int DFLpos = driveFrontLeft.getCurrentPosition() + (pos*89);
+        int DBRpos = driveBackRight.getCurrentPosition() + (pos*89);
+        int DBLpos = driveBackLeft.getCurrentPosition() + (pos*89);
+        driveFrontRight.setTargetPosition(DFRpos);
+        driveFrontLeft.setTargetPosition(DFLpos);
+        driveBackRight.setTargetPosition(DBRpos);
+        driveBackLeft.setTargetPosition(DBLpos);
     }
 
     public void setPos(int pos) {
-        double DFRpos = driveFrontRight.getCurrentPosition() + pos;
-        double DFLpos = driveFrontLeft.getCurrentPosition() + pos;
-        double DBRpos = driveBackRight.getCurrentPosition() + pos;
-        double DBLpos = driveBackLeft.getCurrentPosition() + pos;
         driveFrontRight.setTargetPosition(pos);
         driveFrontLeft.setTargetPosition(pos);
         driveBackRight.setTargetPosition(pos);
         driveBackLeft.setTargetPosition(pos);
+    }
+
+    public void rotLeftINCH(int posInINCH, double powerStart, double powerEnd) {
+        setRotLeft();
+        setPosIn(posInINCH);
+        runToPos();
+        setPower(powerStart);
+        waitForDriveMotorStop();
+        setPower(powerEnd);
+    }
+    public void forwardINCH(int posInINCH, double powerStart, double powerEnd) {
+        setRotLeft();
+        setPosIn(posInINCH);
+        runToPos();
+        setPower(powerStart);
+        waitForDriveMotorStop();
+        setPower(powerEnd);
+    }
+    public void rotRightINCH(int posInINCH, double powerStart, double powerEnd) {
+        setRotLeft();
+        setPosIn(posInINCH);
+        runToPos();
+        setPower(powerStart);
+        waitForDriveMotorStop();
+        setPower(powerEnd);
+    }
+    public void backwardINCH(int posInINCH, double powerStart, double powerEnd) {
+        setRotLeft();
+        setPosIn(posInINCH);
+        runToPos();
+        setPower(powerStart);
+        waitForDriveMotorStop();
+        setPower(powerEnd);
+    }
+
+    public void closeArms() {
+        glyphGrabLeft.setPosition(0.7);
+        glyphGrabRight.setPosition(0.3);
+    }
+    public void openArms() {
+        glyphGrabLeft.setPosition(1);
+        glyphGrabRight.setPosition(0);
+    }
+
+    public void setPosIn(int pos) {
+        int poss = pos*89;
+        driveFrontRight.setTargetPosition(poss);
+        driveFrontLeft.setTargetPosition(poss);
+        driveBackRight.setTargetPosition(poss);
+        driveBackLeft.setTargetPosition(poss);
     }
 
     public void runToPos() {
@@ -182,7 +244,6 @@ public class Definitions {
     public void knockJewelOff(String whichJewel, int motorPos, double servoPos, double motorPower) {
         if (whichJewel.equals("LEFT")) {
             setRotLeft();
-            resetEncoders();
             setPos(motorPos);
             runToPos();
             setPower(motorPower);
@@ -191,7 +252,6 @@ public class Definitions {
             jewels.setPosition(servoPos);
         } else if (whichJewel.equals("RIGHT")) {
             setRotRight();
-            resetEncoders();
             setPos(motorPos);
             runToPos();
             setPower(motorPower);

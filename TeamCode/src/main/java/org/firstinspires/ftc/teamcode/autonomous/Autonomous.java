@@ -6,11 +6,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import com.qualcomm.robotcore.eventloop.opmode.*;
 import org.firstinspires.ftc.teamcode.definitions.Definitions;
 
 /**
- * Created by elijah on 12/9/17.
+ * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 12/9/2017.
  **/
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Main Auto", group="Bambusa")
 public class Autonomous extends LinearOpMode {

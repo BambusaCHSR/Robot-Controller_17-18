@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.definitions.Definitions;
 import org.firstinspires.ftc.teamcode.definitions.Ramp;
 
 /**
- * Created by Bambusa on 1/15/2018.
- */
+ * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:17 PM.
+ **/
 
 @TeleOp(name="opMode", group="Bambusa")
 public class TestTeleOp extends LinearOpMode {

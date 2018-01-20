@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 /**
- * Created by Bambusa on 11/11/17.
+ * Created by ELijah Sauder for Bambusa in Robot-Controller_17-18 on 11/11/17.
  **/
 
 public class Initialization {

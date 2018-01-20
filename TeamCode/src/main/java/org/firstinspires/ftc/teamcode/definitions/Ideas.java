@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.definitions;
 
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.11:38 PM.
- */
+ **/
 public class Ideas {
     public static void Ideas() throws java.lang.Exception {
         double robotdiameter = 18;

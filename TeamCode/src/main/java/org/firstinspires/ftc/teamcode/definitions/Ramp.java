@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.definitions;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Created by Elijah Sauder on 1/15/2018.
- */
+ * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18 on 1/15/2018.
+ **/
 
 public class Ramp {
     private Ramp() {}

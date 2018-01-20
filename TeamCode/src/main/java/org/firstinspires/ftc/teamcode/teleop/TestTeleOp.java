@@ -115,7 +115,7 @@ public class TestTeleOp extends LinearOpMode {
 
             /** testing **/
             if (gamepad1.a) {
-                robot2.rotLeftINCH(90, 0.7);
+                robot2.rotLeftDeg(90, 0.7);
             }
             else if (!gamepad1.a){
             }

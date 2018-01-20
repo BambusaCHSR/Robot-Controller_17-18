@@ -6,14 +6,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.teamcode.definitions.Definitions;
+import org.firstinspires.ftc.teamcode.definitions.Initialization;
 
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 12/9/2017.
  **/
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Main Auto", group="Bambusa")
 public class Autonomous extends LinearOpMode {
-    private Definitions robot = new Definitions();
+    private Initialization robot = new Initialization();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
     @Override
@@ -27,7 +27,7 @@ public class Autonomous extends LinearOpMode {
         int AutoMode = 0;
         boolean cLed = true;
 
-        robot.init(hardwareMap);
+        robot.hardwareMapInit(hardwareMap);
         robot.vuforiaInit();
         robot.servoInit();
         robot.cLed(cLed);

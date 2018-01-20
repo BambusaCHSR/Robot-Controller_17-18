@@ -7,9 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import org.firstinspires.ftc.teamcode.definitions.Definitions;
-
-import java.util.Objects;
+import org.firstinspires.ftc.teamcode.definitions.DrivingDef;
+import org.firstinspires.ftc.teamcode.definitions.Initialization;
 
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:21 PM.
@@ -17,7 +16,8 @@ import java.util.Objects;
 
 @Autonomous(name="Front Auto", group="Bambusa")
 public class AutonomousFront extends LinearOpMode{
-    private Definitions robot = new Definitions();
+    private Initialization robot = new Initialization();
+    private DrivingDef robot2 = new DrivingDef();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
     @Override
@@ -31,7 +31,7 @@ public class AutonomousFront extends LinearOpMode{
         int AutoMode = 0;
         String teamC = null;
 
-        robot.init(hardwareMap);
+        robot.hardwareMapInit(hardwareMap);
         robot.vuforiaInit();
         robot.servoInit();
         robot.cLed(true);
@@ -77,8 +77,8 @@ public class AutonomousFront extends LinearOpMode{
                     }
                     else if (robot.jewelColor.red() == 0 && robot.jewelColor.blue() == 0){
                         jewelGotten = false;
-                        robot.setRotLeft();
-                        robot.setPower(0.2);
+                        robot2.setRotLeft();
+                        robot2.setPower(0.2);
                     }
                 }
                 else if (jewelGotten && AutoMode == 0) {
@@ -104,30 +104,30 @@ public class AutonomousFront extends LinearOpMode{
 
                 if (AutoMode == 1) {
                     telemetry.addData("VuMark", "Already Read");
-                    robot.rotLeftINCH(14,0.5,0);
-                    robot.forwardINCH(36,0.5,0);
-                    robot.rotRightINCH(14,0.5,0);
-                    robot.forwardINCH(11,0.5,0);
+                    robot2.rotLeftDeg(90,0.5);
+                    robot2.forwardINCH(36,0.5);
+                    robot2.rotRightDeg(90,0.5);
+                    robot2.forwardINCH(11,0.5);
                     robot.openArms();
-                    robot.backwardINCH(5,0.2,0);
+                    robot2.backwardINCH(5,0.2);
                 }
                 else if (AutoMode == 2) {
                     telemetry.addData("VuMark", "Already Read");
-                    robot.rotLeftINCH(14,0.5,0);
-                    robot.forwardINCH(28,0.5,0);
-                    robot.rotRightINCH(14,0.5,0);
-                    robot.forwardINCH(11,0.5,0);
+                    robot2.rotLeftDeg(90,0.5);
+                    robot2.forwardINCH(28,0.5);
+                    robot2.rotRightDeg(90,0.5);
+                    robot2.forwardINCH(11,0.5);
                     robot.openArms();
-                    robot.backwardINCH(5,0.2,0);
+                    robot2.backwardINCH(5,0.2);
                 }
                 else if (AutoMode == 3) {
                     telemetry.addData("VuMark", "Already Read");
-                    robot.rotLeftINCH(14,0.5,0);
-                    robot.forwardINCH(44,0.5,0);
-                    robot.rotRightINCH(14,0.5,0);
-                    robot.forwardINCH(11,0.5,0);
+                    robot2.rotLeftDeg(90,0.5);
+                    robot2.forwardINCH(44,0.5);
+                    robot2.rotRightDeg(90,0.5);
+                    robot2.forwardINCH(11,0.5);
                     robot.openArms();
-                    robot.backwardINCH(5,0.2,0);
+                    robot2.backwardINCH(5,0.2);
                 }
             }
             /**This is the blue side**/
@@ -146,8 +146,8 @@ public class AutonomousFront extends LinearOpMode{
                     }
                     else if (robot.jewelColor.red() == 0 && robot.jewelColor.blue() == 0){
                         jewelGotten = false;
-                        robot.setRotLeft();
-                        robot.setPower(0.2);
+                        robot2.setRotLeft();
+                        robot2.setPower(0.2);
                     }
                 }
                 else if (jewelGotten && AutoMode == 0) {
@@ -173,30 +173,30 @@ public class AutonomousFront extends LinearOpMode{
 
                 if (AutoMode == 1) {
                     telemetry.addData("VuMark", "Already Read");
-                    robot.rotRightINCH(14,0.5,0);
-                    robot.forwardINCH(36,0.5,0);
-                    robot.rotLeftINCH(14,0.5,0);
-                    robot.forwardINCH(11,0.5,0);
+                    robot2.rotRightDeg(90,0.5);
+                    robot2.forwardINCH(36,0.5);
+                    robot2.rotLeftDeg(14,0.5);
+                    robot2.forwardINCH(11,0.5);
                     robot.openArms();
-                    robot.backwardINCH(5,0.2,0);
+                    robot2.backwardINCH(5,0.2);
                 }
                 else if (AutoMode == 2) {
                     telemetry.addData("VuMark", "Already Read");
-                    robot.rotRightINCH(14,0.5,0);
-                    robot.forwardINCH(28,0.5,0);
-                    robot.rotLeftINCH(14,0.5,0);
-                    robot.forwardINCH(11,0.5,0);
+                    robot2.rotRightDeg(90,0.5);
+                    robot2.forwardINCH(28,0.5);
+                    robot2.rotLeftDeg(90,0.5);
+                    robot2.forwardINCH(11,0.5);
                     robot.openArms();
-                    robot.backwardINCH(5,0.2,0);
+                    robot2.backwardINCH(5,0.2);
                 }
                 else if (AutoMode == 3) {
                     telemetry.addData("VuMark", "Already Read");
-                    robot.rotRightINCH(14,0.5,0);
-                    robot.forwardINCH(44,0.5,0);
-                    robot.rotLeftINCH(14,0.5,0);
-                    robot.forwardINCH(11,0.5,0);
+                    robot2.rotRightDeg(90,0.5);
+                    robot2.forwardINCH(44,0.5);
+                    robot2.rotLeftDeg(90,0.5);
+                    robot2.forwardINCH(11,0.5);
                     robot.openArms();
-                    robot.backwardINCH(5,0.2,0);
+                    robot2.backwardINCH(5,0.2);
                 }
             }
 

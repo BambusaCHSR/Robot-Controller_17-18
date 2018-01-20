@@ -10,9 +10,9 @@ public class Ramp {
     private Ramp() {}
 
     //Sin wave ramp, it looks like an S
-    public static double sRamp(double number, double max, double rate) {
+    public static double sRamp(double number, double max) {
         //A sin function between [0,0] and [rate,max]
-        double sinFunc = (Math.abs(max)/2)*(1+Math.sin((((1/Math.abs(rate))*number)*Math.PI)-(Math.PI/2)));
+        double sinFunc = (Math.abs(max)/2)*(1+Math.sin(((number)*Math.PI)-(Math.PI/2)));
         //if statements making sure that it only gives the sinfunc when the input number is above or below 0
         if (number < 0) {
             return -sinFunc;

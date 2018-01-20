@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.definitions.Definitions;
+import org.firstinspires.ftc.teamcode.definitions.DrivingDef;
+import org.firstinspires.ftc.teamcode.definitions.Initialization;
 import org.firstinspires.ftc.teamcode.definitions.Ramp;
 
 /**
@@ -15,8 +16,9 @@ import org.firstinspires.ftc.teamcode.definitions.Ramp;
 @TeleOp(name="opMode", group="Bambusa")
 public class TestTeleOp extends LinearOpMode {
 
-    //loads the Definitions file.
-    private Definitions robot = new Definitions();
+    //loads the Initialization file.
+    private Initialization robot = new Initialization();
+    private DrivingDef robot2 = new DrivingDef();
 
     //Sets up Elapsed Time so we can see the runtime of the robot program.
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
@@ -37,7 +39,7 @@ public class TestTeleOp extends LinearOpMode {
         boolean servo = true; //
 
         //initializes the Hardware map from the definitions file.
-        robot.init(hardwareMap);
+        robot.hardwareMapInit(hardwareMap);
 
         //calls the Initializations for the servos from the definitions file
         robot.servoInit();
@@ -77,12 +79,11 @@ public class TestTeleOp extends LinearOpMode {
             boolean back = gamepad1.back && gamepad2.back;
 
             /**Drive values**/
-
             //sets the the variables for the motor power to the following equations and clips it to 1.
-            double DFR = Range.clip(Ramp.sRamp(-gamey - gamex - gamer, 1,1),-1,1); //This will clip the outputs to the motors
-            double DFL = Range.clip(Ramp.sRamp(gamey - gamex - gamer,1,1),-1,1);//to 1 making sure they don't burn out.
-            double DBR = Range.clip(Ramp.sRamp(-gamey + gamex - gamer,1,1),-1,1);
-            double DBL = Range.clip(Ramp.sRamp(gamey + gamex - gamer,1,1),-1,1);
+            double DFR = Range.clip(Ramp.sRamp(-gamey - gamex - gamer, 1),-1,1); //This will clip the outputs to the motors
+            double DFL = Range.clip(Ramp.sRamp(gamey - gamex - gamer,1),-1,1);//to 1 making sure they don't burn out.
+            double DBR = Range.clip(Ramp.sRamp(-gamey + gamex - gamer,1),-1,1);
+            double DBL = Range.clip(Ramp.sRamp(gamey + gamex - gamer,1),-1,1);
 
             /**------------------------------------------
              * Movement and any other actual robot actions
@@ -103,10 +104,28 @@ public class TestTeleOp extends LinearOpMode {
             else if (bumpL) robot.lift.setPower(0.5); //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
             else robot.lift.setPower(0);
 
+            //Second take at the toggle for the glyph grabber
+            if (toggle && b) { toggle = false;
+                if (servo) { servo= false;
+                    robot.openArms();
+                } else { servo= true;
+                    robot.closeArms();
+                }
+            } else if(!toggle) toggle = true;
+
+            /** testing **/
+            if (gamepad1.a) {
+                robot2.rotLeftINCH(90, 0.7);
+            }
+            else if (!gamepad1.a){
+            }
+
+
+
             //Toggle for the glyph grabber
-            if (!toggle && b) { //If the toggle is off and the user is pressing the b button start the toggle, start the if statement
+            /*if (!toggle && b) { //If the toggle is off and the user is pressing the b button start the toggle, start the if statement
                 toggle = true; //sets the toggle to true once you start it
-                if (!servo) { //if the servo has not been closed (if it is false) close them
+                if (servo) { //if the servo has not been closed (if it is false) close them
                     servo = true; //sets the servo variable to true, saying the grippers are closed
                     robot.glyphGrabLeft.setPosition(0.7); //sets the positions to which the servos move to.
                     robot.glyphGrabRight.setPosition(0.3);
@@ -118,7 +137,7 @@ public class TestTeleOp extends LinearOpMode {
             }
             else if (!b) { //If you aren't pressing the toggle button make sure the toggle variable is set to false
                 toggle = false;
-            }
+            }*/
 
             /**Emergency Stop**/
                 STOP = back;

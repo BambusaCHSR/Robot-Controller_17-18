@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.definitions.Definitions;
+import org.firstinspires.ftc.teamcode.definitions.Initialization;
 
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:22 PM.
@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.definitions.Definitions;
 
 public class AutonomousBack extends LinearOpMode{
 
-    private Definitions robot = new Definitions();
+    private Initialization robot = new Initialization();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
     @Override

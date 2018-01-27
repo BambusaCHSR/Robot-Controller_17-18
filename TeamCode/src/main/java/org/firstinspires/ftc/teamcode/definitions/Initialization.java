@@ -49,7 +49,7 @@ public class Initialization {
     public ColorSensor teamColor = null;
 
     public VuforiaLocalizer vuforia;
-
+    // hacked by theo
     private int cameraMonitorViewId;
 
     public void hardwareMapInit(HardwareMap Map) {

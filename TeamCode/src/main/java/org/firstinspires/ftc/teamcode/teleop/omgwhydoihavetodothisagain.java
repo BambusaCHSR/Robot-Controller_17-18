@@ -1,21 +1,20 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.definitions.DrivingDef;
 import org.firstinspires.ftc.teamcode.definitions.Initialization;
 import org.firstinspires.ftc.teamcode.definitions.Ramp;
 
 /**
- * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:17 PM.
- **/
-@Disabled
-@TeleOp(name="opMode", group="Bambusa")
-public class TestTeleOp extends LinearOpMode {
+ * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/26/2018.11:37 AM.
+ */
+@TeleOp(name = "whydoihavetodothisagain:/")
+public class omgwhydoihavetodothisagain extends LinearOpMode {
 
     //loads the Initialization file.
     private Initialization robot = new Initialization();
@@ -52,10 +51,9 @@ public class TestTeleOp extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        //loop for running the robot once the start button is pressed
-        while (opModeIsActive() && !STOP) { //the !STOP is the boolean variable for the emergency stop. Once the emergency
-                                            //stop is triggered it will change to true and remove one of the
-                                            //loop's dependencies causing the loop to stop
+        waitForStart();
+
+        while (opModeIsActive()) {
             /**-----------------
              * Gamepad Variables
              * ------------------*/
@@ -81,10 +79,10 @@ public class TestTeleOp extends LinearOpMode {
 
             /**Drive values**/
             //sets the the variables for the motor power to the following equations and clips it to 1.
-            double DFR = Range.clip(Ramp.sRamp(-gamey - gamex - gamer, 1),-1,1); //This will clip the outputs to the motors
-            double DFL = Range.clip(Ramp.sRamp(gamey - gamex - gamer,1),-1,1);//to 1 making sure they don't burn out.
-            double DBR = Range.clip(Ramp.sRamp(-gamey + gamex - gamer,1),-1,1);
-            double DBL = Range.clip(Ramp.sRamp(gamey + gamex - gamer,1),-1,1);
+            double DFR = Range.clip(-gamey - gamex - gamer,-1,1); //This will clip the outputs to the motors
+            double DFL = Range.clip(gamey - gamex - gamer,-1,1);//to 1 making sure they don't burn out.
+            double DBR = Range.clip(-gamey + gamex - gamer,-1,1);
+            double DBL = Range.clip(gamey + gamex - gamer,-1,1);
 
             /**------------------------------------------
              * Movement and any other actual robot actions
@@ -138,9 +136,6 @@ public class TestTeleOp extends LinearOpMode {
             else if (!b) { //If you aren't pressing the toggle button make sure the toggle variable is set to false
                 toggle = false;
             }*/
-
-            /**Emergency Stop**/
-                STOP = back;
 
             //adds the telemetry of the robot to the controller screen.
             telemetry.addData("Status", "Run Time: " + runtime.toString());

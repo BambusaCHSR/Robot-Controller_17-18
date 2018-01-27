@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/26/2018.8:18 PM.
  */
 
-public class Movements extends Initilization {
+public class Movements extends Initialization {
 
     private EncodersDef encoders = new EncodersDef();
 

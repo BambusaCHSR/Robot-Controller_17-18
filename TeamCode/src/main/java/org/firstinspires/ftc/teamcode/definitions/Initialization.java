@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/26/2018.7:48 PM.
  */
 
-public class Initilization {
+public class Initialization {
     private EncodersDef encoders = new EncodersDef();
 
     public DcMotor driveFrontRight = null;

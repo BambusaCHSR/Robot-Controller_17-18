@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Movements extends Initilization {
 
+    private EncodersDef encoders = new EncodersDef();
+
     public void openArms() {
         glyphGrabLeft.setPosition(1);
         glyphGrabRight.setPosition(0);
@@ -16,6 +18,13 @@ public class Movements extends Initilization {
     public void closeArms() {
         glyphGrabLeft.setPosition(0.7);
         glyphGrabRight.setPosition(0.3);
+    }
+
+    public void jewelDown() {
+        jewelKnocker.setPosition(0);
+    }
+    public void jewelUp() {
+        jewelKnocker.setPosition(0.96);
     }
 
     public void setDriveForward() {
@@ -48,5 +57,18 @@ public class Movements extends Initilization {
         driveFrontLeft.setPower(power);
         driveBackRight.setPower(power);
         driveBackLeft.setPower(power);
+    }
+
+    public void knockJewelOff(String whichJewel, int motorPosDeg, double servoPos, double motorPower) {
+        if (whichJewel.equals("LEFT")) {
+            jewelDown();
+            encoders.rotLeftDeg(motorPosDeg, motorPower);
+            jewelUp();
+        }
+        else if (whichJewel.equals("RIGHT")) {
+            jewelDown();
+            encoders.rotRightDeg(motorPosDeg, motorPower);
+            jewelUp();
+        }
     }
 }

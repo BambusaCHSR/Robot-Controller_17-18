@@ -2,18 +2,15 @@ package org.firstinspires.ftc.teamcode.definitions;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Hardware;
-import com.vuforia.Vuforia;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/26/2018.7:48 PM.
- */
+ **/
 
 public class Initialization {
     private EncodersDef encoders = new EncodersDef();

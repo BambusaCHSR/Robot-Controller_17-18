@@ -70,19 +70,16 @@ public class FrontAuto extends LinearOpMode{
                         robot.knockJewelOff("RIGHT", 300, 0, 0.5);
                         jewelGotten = true;
                         telemetry.addData("Jewel", "Gotten");
-                    }
-                    else if (robot.jewelColor.red() < robot.jewelColor.blue()) {
+                    } else if (robot.jewelColor.red() < robot.jewelColor.blue()) {
                         robot.knockJewelOff("LEFT",300, 0, 0.5);
                         jewelGotten = true;
                         telemetry.addData("Jewel", "Gotten");
-                    }
-                    else if (robot.jewelColor.red() == 0 && robot.jewelColor.blue() == 0){
+                    } else if (robot.jewelColor.red() == 0 && robot.jewelColor.blue() == 0){
                         jewelGotten = false;
                         robot.setRotLeft();
                         robot.setPower(0.2);
                     }
-                }
-                else if (jewelGotten && AutoMode == 0) {
+                } else if (jewelGotten && AutoMode == 0) {
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         if (vuMark == center) {
                             telemetry.addData("VuMark", "Center visible", vuMark);
@@ -97,13 +94,10 @@ public class FrontAuto extends LinearOpMode{
                             telemetry.addData("VuMark", "Idk what I am seeing");
                             AutoMode = 0;
                         }
-                    }
-                    else {
+                    } else {
                         telemetry.addData("VuMark", "No pictogram seen");
                     }
-                }
-
-                if (AutoMode == 1) {
+                }if (AutoMode == 1) {
                     telemetry.addData("VuMark", "Already Read");
                     encoders.rotLeftDeg(90,0.5);
                     encoders.forwardINCH(36,0.5);
@@ -111,8 +105,7 @@ public class FrontAuto extends LinearOpMode{
                     encoders.forwardINCH(11,0.5);
                     robot.openArms();
                     encoders.backwardINCH(5,0.2);
-                }
-                else if (AutoMode == 2) {
+                } else if (AutoMode == 2) {
                     telemetry.addData("VuMark", "Already Read");
                     encoders.rotLeftDeg(90,0.5);
                     encoders.forwardINCH(28,0.5);
@@ -120,8 +113,7 @@ public class FrontAuto extends LinearOpMode{
                     encoders.forwardINCH(11,0.5);
                     robot.openArms();
                     encoders.backwardINCH(5,0.2);
-                }
-                else if (AutoMode == 3) {
+                } else if (AutoMode == 3) {
                     telemetry.addData("VuMark", "Already Read");
                     encoders.rotLeftDeg(90,0.5);
                     encoders.forwardINCH(44,0.5);
@@ -139,19 +131,16 @@ public class FrontAuto extends LinearOpMode{
                         robot.knockJewelOff("LEFT", 300, 0, 0.5);
                         jewelGotten = true;
                         telemetry.addData("Jewel", "Gotten");
-                    }
-                    else if (robot.jewelColor.red() < robot.jewelColor.blue()) {
+                    } else if (robot.jewelColor.red() < robot.jewelColor.blue()) {
                         robot.knockJewelOff("RIGHT",300, 0, 0.5);
                         jewelGotten = true;
                         telemetry.addData("Jewel", "Gotten");
-                    }
-                    else if (robot.jewelColor.red() == 0 && robot.jewelColor.blue() == 0){
+                    } else if (robot.jewelColor.red() == 0 && robot.jewelColor.blue() == 0){
                         jewelGotten = false;
                         robot.setRotLeft();
                         robot.setPower(0.2);
                     }
-                }
-                else if (jewelGotten && AutoMode == 0) {
+                } else if (jewelGotten && AutoMode == 0) {
                     if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
                         if (vuMark == center) {
                             telemetry.addData("VuMark", "Center visible", vuMark);
@@ -166,13 +155,10 @@ public class FrontAuto extends LinearOpMode{
                             telemetry.addData("VuMark", "Idk what I am seeing");
                             AutoMode = 0;
                         }
-                    }
-                    else {
+                    } else {
                         telemetry.addData("VuMark", "No pictogram seen");
                     }
-                }
-
-                if (AutoMode == 1) {
+                }if (AutoMode == 1) {
                     telemetry.addData("VuMark", "Already Read");
                     encoders.rotRightDeg(90,0.5);
                     encoders.forwardINCH(36,0.5);
@@ -180,8 +166,7 @@ public class FrontAuto extends LinearOpMode{
                     encoders.forwardINCH(11,0.5);
                     robot.openArms();
                     encoders.backwardINCH(5,0.2);
-                }
-                else if (AutoMode == 2) {
+                } else if (AutoMode == 2) {
                     telemetry.addData("VuMark", "Already Read");
                     encoders.rotRightDeg(90,0.5);
                     encoders.forwardINCH(28,0.5);
@@ -189,8 +174,7 @@ public class FrontAuto extends LinearOpMode{
                     encoders.forwardINCH(11,0.5);
                     robot.openArms();
                     encoders.backwardINCH(5,0.2);
-                }
-                else if (AutoMode == 3) {
+                } else if (AutoMode == 3) {
                     telemetry.addData("VuMark", "Already Read");
                     encoders.rotRightDeg(90,0.5);
                     encoders.forwardINCH(44,0.5);

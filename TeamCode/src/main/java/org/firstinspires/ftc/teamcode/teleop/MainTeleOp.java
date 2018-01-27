@@ -96,9 +96,7 @@ public class MainTeleOp extends LinearOpMode {
             } else if(!toggle) toggle = true;
 
             /** testing **/
-            if (gamepad1.a) {
-                encoder.rotLeftDeg(90, 0.7);
-            }
+            if (gamepad1.a) encoder.rotLeftDeg(90, 0.7);
 
             /**Emergency Stop**/
             STOP = back;

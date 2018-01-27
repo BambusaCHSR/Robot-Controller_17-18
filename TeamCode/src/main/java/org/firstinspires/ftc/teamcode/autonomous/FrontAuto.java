@@ -8,7 +8,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 import org.firstinspires.ftc.teamcode.definitions.EncodersDef;
-import org.firstinspires.ftc.teamcode.definitions.Initialization;
 import org.firstinspires.ftc.teamcode.definitions.Movements;
 
 /**
@@ -16,7 +15,7 @@ import org.firstinspires.ftc.teamcode.definitions.Movements;
  */
 
 @Autonomous(name="Front Auto", group="Bambusa")
-class AutonomousFront extends LinearOpMode{
+public class FrontAuto extends LinearOpMode{
     private EncodersDef encoders = new EncodersDef();
     private Movements robot = new Movements();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);

@@ -69,7 +69,6 @@ public class EncodersDef extends Initilization {
         }
     }
 
-
     public void rotLeftDeg(double degrees, double powerStart) {
         drive.setRotLeft();
         posDeg(degrees);

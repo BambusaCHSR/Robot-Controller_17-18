@@ -1,23 +1,16 @@
-package org.firstinspires.ftc.teamcode.teleop;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.definitions.EncodersDef;
-import org.firstinspires.ftc.teamcode.definitions.Movements;
-import org.firstinspires.ftc.teamcode.definitions.Ramp;
-
 /**
- * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/26/2018.7:49 PM.
- **/
-
-@TeleOp(name="main", group="bambusa")
-public class MainTeleOp extends LinearOpMode {
-
-    private EncodersDef encoder = new EncodersDef();
-    private Movements move = new Movements();
+ * Created by Elijah Sauder for Bambusa in ftc_app, on 01/27/2018.12:14 AM.
+ */
+@TeleOp(name = "test")
+public class teleOp extends LinearOpMode {
+    private Definitions robot = new Definitions();
 
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
@@ -30,15 +23,15 @@ public class MainTeleOp extends LinearOpMode {
         boolean toggle = false;
         boolean servos = true;
 
-        move.hardwareMapInit(hardwareMap);
-        move.servoInit();
+        robot.hardwareMapInit(hardwareMap);
+        robot.servoInit();
 
-        move.jewelColor.enableLed(true);
-        move.teamColor.enableLed(false);
+        robot.jewelColor.enableLed(true);
+        robot.teamColor.enableLed(false);
 
-        waitForStart();
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+        waitForStart();
         runtime.reset();
 
         while (opModeIsActive() && !STOP) {
@@ -50,10 +43,6 @@ public class MainTeleOp extends LinearOpMode {
             double gamex = gamepad1.left_stick_x;
             double gamey = gamepad1.left_stick_y;
             double gamer = gamepad1.right_stick_x;
-
-            //arm gamepad inputs
-            double lower = 0.6*gamepad2.left_stick_x;
-            double upper = 0.4*gamepad2.right_stick_x;
 
             //glyph lifter gamepad inputs
             boolean bumpR = gamepad2.right_bumper;
@@ -76,27 +65,27 @@ public class MainTeleOp extends LinearOpMode {
              * Movement and any other actual robot actions
              * ------------------------------------------*/
             //Takes the variables from above and sets them to the drive motors to give them power.
-            move.driveFrontRight.setPower(DFR); //Motor controller for front motors: AL00VXSF (Front Motors)
-            move.driveFrontLeft.setPower(DFL);
-            move.driveBackRight.setPower(DBR); //Motor controller for back motors: AL00VXUD (Back Motors)
-            move.driveBackLeft.setPower(DBL);
+            robot.driveFrontRight.setPower(DFR); //Motor controller for front motors: AL00VXSF (Front Motors)
+            robot.driveFrontLeft.setPower(DFL);
+            robot.driveBackRight.setPower(DBR); //Motor controller for back motors: AL00VXUD (Back Motors)
+            robot.driveBackLeft.setPower(DBL);
 
             //Sets the movement of the glyph lifter to the two bumpers on the gamepad
-            if (bumpR && bumpL) move.lift.setPower(0); //Adds a safety in case the gamepad operator presses both bumpers
-            else if (bumpR) move.lift.setPower(-0.5); //Makes sure that only one of the bumpers is being pressed for it to raise.
-            else if (bumpL) move.lift.setPower(0.5); //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
-            else move.lift.setPower(0);
+            if (bumpR && bumpL) robot.lift.setPower(0); //Adds a safety in case the gamepad operator presses both bumpers
+            else if (bumpR) robot.lift.setPower(-0.5); //Makes sure that only one of the bumpers is being pressed for it to raise.
+            else if (bumpL) robot.lift.setPower(0.5); //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
+            else robot.lift.setPower(0);
 
             if (toggle && b) { toggle = false;
                 if (servos) { servos= false;
-                    move.openArms();
+                    robot.openArms();
                 } else { servos= true;
-                    move.closeArms();
+                    robot.closeArms();
                 }
             } else if(!toggle) toggle = true;
 
             /** testing **/
-            if (gamepad1.a) encoder.rotLeftDeg(90, 0.7);
+            if (gamepad1.a) robot.rotLeftDeg(90, 0.7);
 
             /**Emergency Stop**/
             STOP = back;

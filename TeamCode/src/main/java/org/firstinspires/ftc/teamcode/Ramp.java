@@ -1,10 +1,10 @@
-package org.firstinspires.ftc.teamcode.definitions;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18 on 1/15/2018.
- **/
+ * Created by Elijah Sauder for Bambusa in ftc_app, on 01/27/2018.12:15 AM.
+ */
 
 public class Ramp {
     private Ramp() {}

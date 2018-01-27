@@ -16,6 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
  */
 
 public class Initilization {
+    private EncodersDef encoders = new EncodersDef();
 
     public DcMotor driveFrontRight = null;
     public DcMotor driveFrontLeft = null;
@@ -73,9 +74,7 @@ public class Initilization {
     }
 
     public void encoderInit() {
-        driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        encoders.useEncoders();
+        encoders.resetEncoders();
     }
 }

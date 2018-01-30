@@ -94,7 +94,7 @@ public class Definitions {
         driveBackLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
 
-    /*public void posInch(double pos) {
+    public void posInch(double pos) {
         double toInch = motorTicks/(wheelDiamater*Math.PI);
 
         int poss = (int) (pos*toInch);
@@ -103,7 +103,6 @@ public class Definitions {
         driveBackRight.setTargetPosition(poss + driveBackRight.getCurrentPosition());
         driveBackLeft.setTargetPosition(poss + driveBackLeft.getCurrentPosition());
     }
-*/
     public void posDeg(double degreesOfTurning) {
         int T = motorTicks; //Encoder ticks per revolution of the motor
         double Dr = 15.25; //The diagonal between two of the wheels of a 4 wheeled robot.
@@ -116,7 +115,7 @@ public class Definitions {
         driveBackRight.setTargetPosition(poss + driveBackRight.getCurrentPosition());
         driveBackLeft.setTargetPosition(poss + driveBackLeft.getCurrentPosition());
     }
-/*
+
     public void setPos(int pos) {
         driveFrontRight.setTargetPosition(pos + driveFrontRight.getCurrentPosition());
         driveFrontLeft.setTargetPosition(pos + driveFrontLeft.getCurrentPosition());
@@ -168,7 +167,7 @@ public class Definitions {
         setPower(powerStart);
         waitForDriveMotorStop();
         setPower(0);
-    }*/
+    }
 
     public void openArms() {
         glyphGrabLeft.setPosition(0);
@@ -180,7 +179,7 @@ public class Definitions {
         glyphGrabRight.setPosition(0.7);
     }
 
-    /*
+
     public void jewelDown() {
         jewelKnocker.setPosition(0);
     }
@@ -231,5 +230,5 @@ public class Definitions {
             rotRightDeg(motorPosDeg, motorPower);
             jewelUp();
         }
-    }*/
+    }
 }

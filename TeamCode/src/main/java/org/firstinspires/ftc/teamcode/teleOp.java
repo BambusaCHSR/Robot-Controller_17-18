@@ -83,17 +83,19 @@ public class teleOp extends LinearOpMode {
                 }
                 else {
                     servos= true;
+                    toggleon = false;
                     robot.openArms();
                 }
             } else if (!a) {
                 toggle = true;
-
-                if (gamepad2.x && !toggleon) robot.glyphGrabLeft.setPosition(0.7);
-                else robot.glyphGrabLeft.setPosition(1);
-
-                if (gamepad2.b && !toggleon) robot.glyphGrabRight.setPosition(0.3);
-                else robot.glyphGrabRight.setPosition(0);
             }
+
+            if (gamepad2.x && !toggleon) robot.glyphGrabLeft.setPosition(0.7);
+            else robot.glyphGrabLeft.setPosition(1);
+
+            if (gamepad2.b && !toggleon) robot.glyphGrabRight.setPosition(0.3);
+            else robot.glyphGrabRight.setPosition(0);
+
 
             /** testing **/
             //if (gamepad1.a) robot.rotLeftDeg(90, 0.7);

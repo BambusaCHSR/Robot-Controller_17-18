@@ -60,13 +60,8 @@ public class Definitions {
     }
 
     public void servoInit() {
-        glyphGrabRight.setPosition(1);
-        glyphGrabLeft.setPosition(0);
-
-        //glyphGrabLeft.setPosition(0.7);
-        //glyphGrabRight.setPosition(0.3);
-
-        //jewelKnocker.setPosition(0.96);
+        openArms();
+        jewelUp();
     }
 
     public void vuforiaInit() {

@@ -24,8 +24,9 @@ public class teleOp extends LinearOpMode {
         boolean toggleon = false;
 
         robot.hardwareMapInit(hardwareMap);
+
         robot.servoInit();
-        //robot.encoderInit();
+        robot.driveInitTele();
 
         waitForStart();
         runtime.reset();

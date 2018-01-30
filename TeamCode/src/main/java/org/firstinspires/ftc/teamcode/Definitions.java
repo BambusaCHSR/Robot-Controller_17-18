@@ -75,6 +75,15 @@ public class Definitions {
         useEncoders();
         resetEncoders();
     }
+    public void driveInitTele() {
+        dontUseEncoders();
+        resetEncoders();
+    }
+    public void driveInitAuto() {
+        useEncoders();
+        runModePos();
+        resetEncoders();
+    }
 
     public void useEncoders() {
         driveFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -82,11 +91,25 @@ public class Definitions {
         driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+    void dontUseEncoders() {
+        driveFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     public void resetEncoders() {
-        driveFrontRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        driveFrontLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        driveBackRight.setMode(DcMotor.RunMode.RESET_ENCODERS);
-        driveBackLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
+        driveFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveBackRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+    void runModePos() {
+        driveFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void posInch(double pos) {

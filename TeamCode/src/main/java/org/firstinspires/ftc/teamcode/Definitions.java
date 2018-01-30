@@ -99,11 +99,9 @@ public class Definitions {
         driveBackLeft.setTargetPosition(poss + driveBackLeft.getCurrentPosition());
     }
     public void posDeg(double degreesOfTurning) {
-        int T = motorTicks; //Encoder ticks per revolution of the motor
-        double Dr = 15.25; //The diagonal between two of the wheels of a 4 wheeled robot.
-        double Dw = wheelDiamater; //The diameter of the wheels of the robot.
+        double robotDiamater = 15.25; //The diagonal between two of the wheels of a 4 wheeled robot.
 
-        int poss = (int) ((Dr/Dw)*((T/360)*degreesOfTurning));
+        int poss = (int) ((robotDiamater/wheelDiamater)*((motorTicks/360)*degreesOfTurning));
 
         driveFrontRight.setTargetPosition(poss + driveFrontRight.getCurrentPosition());
         driveFrontLeft.setTargetPosition(poss + driveFrontLeft.getCurrentPosition());

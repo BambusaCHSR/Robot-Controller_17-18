@@ -26,9 +26,6 @@ public class teleOp extends LinearOpMode {
         robot.servoInit();
         //robot.encoderInit();
 
-        //robot.jewelColor.enableLed(true);
-        //robot.teamColor.enableLed(false);
-
         waitForStart();
         runtime.reset();
 
@@ -76,17 +73,10 @@ public class teleOp extends LinearOpMode {
             else if (bumpL) robot.lift.setPower(0.5); //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
             else robot.lift.setPower(0);
 
-            /*if (b) {
-                robot.closeArms();
-            }
-            else {
-                robot.openArms();
-            }*/
-
             if (toggle && b) { toggle = false;
                 if (servos) {servos= false; robot.closeArms();}
-                else servos= true; robot.openArms();
-            } else if (!b)toggle = true;
+                else {servos= true; robot.openArms();}
+            } else if (!b) {toggle = true;}
 
             /** testing **/
             //if (gamepad1.a) robot.rotLeftDeg(90, 0.7);

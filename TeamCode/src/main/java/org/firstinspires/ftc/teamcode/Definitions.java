@@ -171,11 +171,11 @@ public class Definitions {
 
     public void openArms() {
         glyphGrabLeft.setPosition(0);
-        glyphGrabRight.setPosition(0.96);
+        glyphGrabRight.setPosition(1);
     }
 
     public void closeArms() {
-        glyphGrabLeft.setPosition(0.7);
+        glyphGrabLeft.setPosition(0.3);
         glyphGrabRight.setPosition(0.7);
     }
 

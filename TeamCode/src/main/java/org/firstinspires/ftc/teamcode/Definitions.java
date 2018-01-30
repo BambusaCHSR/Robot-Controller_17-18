@@ -17,24 +17,24 @@ public class Definitions {
     private int motorTicks = 1120;
     private double wheelDiamater = 4;
 
-    public DcMotor driveFrontRight = null;
-    public DcMotor driveFrontLeft = null;
-    public DcMotor driveBackRight = null;
-    public DcMotor driveBackLeft = null;
+    DcMotor driveFrontRight = null;
+    DcMotor driveFrontLeft = null;
+    DcMotor driveBackRight = null;
+    DcMotor driveBackLeft = null;
 
-    public DcMotor lift = null;
-    public DcMotor relicGrabRot = null;
+    DcMotor lift = null;
+    DcMotor relicGrabRot = null;
 
-    public Servo glyphGrabRight = null;
-    public Servo glyphGrabLeft = null;
+    Servo glyphGrabRight = null;
+    Servo glyphGrabLeft = null;
 
-    public Servo jewelKnocker = null;
+    Servo jewelKnocker = null;
     public Servo relicGrab = null;
 
-    public ColorSensor jewelColor = null;
-    public ColorSensor teamColor = null;
+    ColorSensor jewelColor = null;
+    ColorSensor teamColor = null;
 
-    public VuforiaLocalizer vuforia = null;
+    VuforiaLocalizer vuforia = null;
 
 
     private int cameraMonitorViewId;
@@ -42,7 +42,7 @@ public class Definitions {
     public void hardwareMapInit(HardwareMap Map) {
         driveFrontRight = Map.dcMotor.get("driveFrontRight");
         driveFrontLeft = Map.dcMotor.get("driveFrontLeft");
-        driveBackRight = Map.dcMotor.get("driveBackRight");
+        driveBackRight = Map.dcMotor.get("driveRightBack");
         driveBackLeft = Map.dcMotor.get("driveBackLeft");
 
         lift = Map.dcMotor.get("lift"); //make sure to change robot config from winch to lift
@@ -54,6 +54,7 @@ public class Definitions {
         jewelKnocker = Map.servo.get("jewelKnocker"); //make sure to change robot config from jewels to jewelKnocker
 
         jewelColor = Map.colorSensor.get("jewelColor");
+        teamColor = Map.colorSensor.get("teamColor");
 
         cameraMonitorViewId = Map.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", Map.appContext.getPackageName());
     }
@@ -62,7 +63,10 @@ public class Definitions {
         glyphGrabRight.setPosition(1);
         glyphGrabLeft.setPosition(0);
 
-        jewelKnocker.setPosition(0.96);
+        //glyphGrabLeft.setPosition(0.7);
+        //glyphGrabRight.setPosition(0.3);
+
+        //jewelKnocker.setPosition(0.96);
     }
 
     public void vuforiaInit() {
@@ -90,7 +94,7 @@ public class Definitions {
         driveBackLeft.setMode(DcMotor.RunMode.RESET_ENCODERS);
     }
 
-    public void posInch(double pos) {
+    /*public void posInch(double pos) {
         double toInch = motorTicks/(wheelDiamater*Math.PI);
 
         int poss = (int) (pos*toInch);
@@ -99,7 +103,7 @@ public class Definitions {
         driveBackRight.setTargetPosition(poss + driveBackRight.getCurrentPosition());
         driveBackLeft.setTargetPosition(poss + driveBackLeft.getCurrentPosition());
     }
-
+*/
     public void posDeg(double degreesOfTurning) {
         int T = motorTicks; //Encoder ticks per revolution of the motor
         double Dr = 15.25; //The diagonal between two of the wheels of a 4 wheeled robot.
@@ -112,7 +116,7 @@ public class Definitions {
         driveBackRight.setTargetPosition(poss + driveBackRight.getCurrentPosition());
         driveBackLeft.setTargetPosition(poss + driveBackLeft.getCurrentPosition());
     }
-
+/*
     public void setPos(int pos) {
         driveFrontRight.setTargetPosition(pos + driveFrontRight.getCurrentPosition());
         driveFrontLeft.setTargetPosition(pos + driveFrontLeft.getCurrentPosition());
@@ -164,18 +168,19 @@ public class Definitions {
         setPower(powerStart);
         waitForDriveMotorStop();
         setPower(0);
-    }
+    }*/
 
     public void openArms() {
-        glyphGrabLeft.setPosition(1);
-        glyphGrabRight.setPosition(0);
+        glyphGrabLeft.setPosition(0);
+        glyphGrabRight.setPosition(0.96);
     }
 
     public void closeArms() {
         glyphGrabLeft.setPosition(0.7);
-        glyphGrabRight.setPosition(0.3);
+        glyphGrabRight.setPosition(0.7);
     }
 
+    /*
     public void jewelDown() {
         jewelKnocker.setPosition(0);
     }
@@ -226,5 +231,5 @@ public class Definitions {
             rotRightDeg(motorPosDeg, motorPower);
             jewelUp();
         }
-    }
+    }*/
 }

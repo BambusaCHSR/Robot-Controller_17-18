@@ -165,13 +165,13 @@ public class Definitions {
     }
 
     public void openArms() {
-        glyphGrabLeft.setPosition(0);
-        glyphGrabRight.setPosition(1);
+        glyphGrabLeft.setPosition(1);
+        glyphGrabRight.setPosition(0);
     }
 
     public void closeArms() {
-        glyphGrabLeft.setPosition(0.3);
-        glyphGrabRight.setPosition(0.7);
+        glyphGrabLeft.setPosition(0.7);
+        glyphGrabRight.setPosition(0.3);
     }
 
 

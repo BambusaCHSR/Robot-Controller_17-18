@@ -21,6 +21,7 @@ public class teleOp extends LinearOpMode {
         boolean STOP = false;
         boolean toggle = true;
         boolean servos = false;
+        boolean toggleon = false;
 
         robot.hardwareMapInit(hardwareMap);
         robot.servoInit();
@@ -73,17 +74,25 @@ public class teleOp extends LinearOpMode {
             else if (bumpL) robot.lift.setPower(0.5); //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
             else robot.lift.setPower(0);
 
-            if (toggle && a) { toggle = false;
-                if (servos) {servos= false; robot.closeArms();}
-                else {servos= true; robot.openArms();}
+            if (toggle && a) {
+                toggle = false;
+                if (servos) {
+                    servos= false;
+                    toggleon = true;
+                    robot.closeArms();
+                }
+                else {
+                    servos= true;
+                    robot.openArms();
+                }
             } else if (!a) {
                 toggle = true;
 
-                if (gamepad2.x) robot.glyphGrabLeft.setPosition(0.3);
-                else robot.glyphGrabLeft.setPosition(0);
+                if (gamepad2.x && !toggleon) robot.glyphGrabLeft.setPosition(0.7);
+                else robot.glyphGrabLeft.setPosition(1);
 
-                if (gamepad2.b) robot.glyphGrabRight.setPosition(0.7);
-                else robot.glyphGrabRight.setPosition(1);
+                if (gamepad2.b && !toggleon) robot.glyphGrabRight.setPosition(0.3);
+                else robot.glyphGrabRight.setPosition(0);
             }
 
             /** testing **/

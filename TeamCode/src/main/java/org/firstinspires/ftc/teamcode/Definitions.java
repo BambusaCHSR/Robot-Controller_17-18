@@ -103,7 +103,7 @@ public class Definitions {
         double Dr = 15.25; //The diagonal between two of the wheels of a 4 wheeled robot.
         double Dw = wheelDiamater; //The diameter of the wheels of the robot.
 
-        int poss = (int) ((Dr/Dw)*(T/360));
+        int poss = (int) ((Dr/Dw)*((T/360)*degreesOfTurning));
 
         driveFrontRight.setTargetPosition(poss + driveFrontRight.getCurrentPosition());
         driveFrontLeft.setTargetPosition(poss + driveFrontLeft.getCurrentPosition());
@@ -171,7 +171,7 @@ public class Definitions {
 
     public void closeArms() {
         glyphGrabLeft.setPosition(0.7);
-        glyphGrabRight.setPosition(0.3);
+        glyphGrabRight.setPosition(0.3a);
     }
 
 

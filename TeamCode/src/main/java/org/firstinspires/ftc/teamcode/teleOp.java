@@ -44,7 +44,7 @@ public class teleOp extends LinearOpMode {
             boolean bumpL = gamepad2.left_bumper; //buffalo wings was here
 
             //Glyph grabber toggle gamepad input
-            boolean b = gamepad2.b;
+            boolean a = gamepad2.a;
 
             //Emergency stop gamepad inputs
             boolean back = gamepad1.back && gamepad2.back;
@@ -73,10 +73,18 @@ public class teleOp extends LinearOpMode {
             else if (bumpL) robot.lift.setPower(0.5); //tells the robot to do nothing with the glyphlifter if no bumpers are pressed.
             else robot.lift.setPower(0);
 
-            if (toggle && b) { toggle = false;
+            if (toggle && a) { toggle = false;
                 if (servos) {servos= false; robot.closeArms();}
                 else {servos= true; robot.openArms();}
-            } else if (!b) {toggle = true;}
+            } else if (!a) {
+                toggle = true;
+
+                if (gamepad2.x) robot.glyphGrabLeft.setPosition(0.3);
+                else robot.glyphGrabLeft.setPosition(0);
+
+                if (gamepad2.b) robot.glyphGrabRight.setPosition(0.7);
+                else robot.glyphGrabRight.setPosition(1);
+            }
 
             /** testing **/
             //if (gamepad1.a) robot.rotLeftDeg(90, 0.7);

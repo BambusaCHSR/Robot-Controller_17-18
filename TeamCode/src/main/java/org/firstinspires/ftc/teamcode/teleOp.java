@@ -91,10 +91,10 @@ public class teleOp extends LinearOpMode {
             }
 
             if (gamepad2.x && !toggleon) robot.glyphGrabLeft.setPosition(0.7);
-            else robot.glyphGrabLeft.setPosition(1);
+            else if (!gamepad2.x && !toggleon)robot.glyphGrabLeft.setPosition(1);
 
             if (gamepad2.b && !toggleon) robot.glyphGrabRight.setPosition(0.3);
-            else robot.glyphGrabRight.setPosition(0);
+            else if (!gamepad2.b && !toggleon)robot.glyphGrabRight.setPosition(0);
 
 
             /** testing **/

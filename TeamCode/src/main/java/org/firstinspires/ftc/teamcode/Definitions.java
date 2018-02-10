@@ -46,7 +46,7 @@ public class Definitions {
         driveBackLeft = Map.dcMotor.get("driveBackLeft");
 
         lift = Map.dcMotor.get("lift"); //make sure to change robot config from winch to lift
-        relicGrabRot = Map.dcMotor.get("relicGrabRot");
+        //relicGrabRot = Map.dcMotor.get("relicGrabRot");
 
         glyphGrabRight = Map.servo.get("glyphGrabRight");
         glyphGrabLeft = Map.servo.get("glyphGrabLeft");
@@ -197,10 +197,10 @@ public class Definitions {
 
 
     public void jewelDown() {
-        jewelKnocker.setPosition(0);
+        jewelKnocker.setPosition(0.6);
     }
     public void jewelUp() {
-        jewelKnocker.setPosition(0.96);
+        jewelKnocker.setPosition(0);
     }
 
     public void setDriveForward() {
@@ -235,14 +235,12 @@ public class Definitions {
         driveBackLeft.setPower(power);
     }
 
-    public void knockJewelOff(String whichJewel, int motorPosDeg, double servoPos, double motorPower) {
+    public void knockJewelOff(String whichJewel, int motorPosDeg, double motorPower) {
         if (whichJewel.equals("LEFT")) {
-            jewelDown();
             rotLeftDeg(motorPosDeg, motorPower);
             jewelUp();
         }
         else if (whichJewel.equals("RIGHT")) {
-            jewelDown();
             rotRightDeg(motorPosDeg, motorPower);
             jewelUp();
         }

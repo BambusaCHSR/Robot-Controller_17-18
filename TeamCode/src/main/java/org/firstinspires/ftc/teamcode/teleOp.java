@@ -12,10 +12,9 @@ public class teleOp extends LinearOpMode {
 
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
-
     @Override
     public void runOpMode() throws InterruptedException {
-        telemetry.addData("Status", "Pre-initialization");
+        telemetry.addData("Status", "Initializing");
         telemetry.update();
 
         boolean STOP = false;
@@ -26,7 +25,9 @@ public class teleOp extends LinearOpMode {
         robot.hardwareMapInit(hardwareMap);
 
         robot.servoInit();
-        robot.driveInitTele();
+
+        telemetry.addData("Status", "Initilized");
+        telemetry.update();
 
         waitForStart();
         runtime.reset();

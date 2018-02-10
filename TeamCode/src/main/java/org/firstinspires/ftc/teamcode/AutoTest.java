@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:21 PM.
  **/
-
+@Disabled
 @Autonomous(name = "Front Autonomous", group = "bambusa")
 public class AutoTest extends LinearOpMode {
 
@@ -125,6 +126,7 @@ public class AutoTest extends LinearOpMode {
                 }
                 else if (movementDone) {
                     telemetry.addData("Status", "Autonomous Done");
+                    sleep(1000);
                     break;
                 }
             }

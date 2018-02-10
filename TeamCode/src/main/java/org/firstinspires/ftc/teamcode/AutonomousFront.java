@@ -8,15 +8,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:21 PM.
  **/
 
-@Autonomous(name = "Front Autonomous", group = "bambusa")
+@Autonomous(name = "Jewels", group = "bambusa")
 public class AutonomousFront extends LinearOpMode {
 
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime();
 
+    private boolean movement = false;
     private boolean jewelGotten = false;
     private boolean teamColor = false;
-    private String teamC = null;
+    private String teamC = "NULL";
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -34,8 +35,6 @@ public class AutonomousFront extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
-            telemetry.addData("Status", "Running");
-
             if (!teamColor) {
                 if (robot.teamColor.red() > robot.teamColor.blue()) {
                     teamC = "RED";
@@ -43,9 +42,11 @@ public class AutonomousFront extends LinearOpMode {
                 } else if (robot.teamColor.red() < robot.teamColor.blue()) {
                     teamC = "BLUE";
                     teamColor = true;
-                } else if (robot.teamColor.red() == 0 && robot.teamColor.blue() == 0)
-                    telemetry.addData("Team Color", "Finiding Team Color");
-            } else telemetry.addData("Team Color", "is: " + teamC);
+                }
+                telemetry.addData("Team Color", "Finiding Team Color");
+            } else {
+                telemetry.addData("Team Color", "is: " + teamC);
+            }
 
             if (teamC.equals("RED")) {
                 if (!jewelGotten) {
@@ -68,15 +69,15 @@ public class AutonomousFront extends LinearOpMode {
                         robot.setPos(50);
                         robot.setPower(0.2);
                     }
-                } else telemetry.addData("Jewel", "Gotten");
-
-                if (jewelGotten) {
+                }
+                /*else if (jewelGotten){
+                    telemetry.addData("Jewel", "Gotten");
                     robot.forwardINCH(36, 0.5);
                     robot.rotLeftDeg(90, 0.4);
                     robot.backwardINCH(12, 0.5);
-                }
+                    telemetry.addData("Move", "Moving");
+                }*/
             }
-
             else if (teamC.equals("BLUE")) {
                 if (!jewelGotten) {
                     telemetry.addData("Jewel", "Not Gotten");
@@ -98,13 +99,14 @@ public class AutonomousFront extends LinearOpMode {
                         robot.setPos(50);
                         robot.setPower(0.2);
                     }
-                } else telemetry.addData("Jewel", "Gotten");
-
-                if (jewelGotten) {
+                } /*else if (jewelGotten && !movement){
+                    telemetry.addData("Jewel", "Gotten");
+                    telemetry.addData("Move", "Moving");
                     robot.backwardINCH(36, 0.5);
                     robot.rotLeftDeg(90,0.4);
                     robot.backwardINCH(12, 0.5);
-                }
+                    movement = false;
+                }*/
             }
 
             telemetry.addLine()
@@ -117,6 +119,10 @@ public class AutonomousFront extends LinearOpMode {
                     .addData("Blue", robot.teamColor.blue());
             telemetry.addData("Status", "Running");
             telemetry.update();
+
+            if (!opModeIsActive()) {
+                break;
+            }
         }
     }
 }

@@ -33,13 +33,13 @@ public class AutoTest extends LinearOpMode {
         telemetry.update();
 
         robot.hardwareMapInit(hardwareMap);
-        robot.vuforiaInit();
+        //robot.vuforiaInit();
         robot.servoInit();
         robot.driveInitAuto();
 
-        VuforiaTrackables relicTrackables = this.robot.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        /*VuforiaTrackables relicTrackables = this.robot.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);
-        relicTemplate.setName("relicVuMarkTemplate");
+        relicTemplate.setName("relicVuMarkTemplate");*/
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -47,12 +47,12 @@ public class AutoTest extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        relicTrackables.activate();
+        //relicTrackables.activate();
 
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
 
-            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            //RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
             if (!teamColor) {
                 if (robot.teamColor.red() > robot.teamColor.blue()) {
@@ -90,9 +90,9 @@ public class AutoTest extends LinearOpMode {
 
                 if (jewelGotten && !rotation) {
                     telemetry.addData("Pictograph", "Looking For Pictograph");
-                    if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
+                    /*if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
                     else if (vuMark == RelicRecoveryVuMark.CENTER) pictograph = 2;
-                    else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;
+                    else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;*/
 
                     rotation = true;
                 }

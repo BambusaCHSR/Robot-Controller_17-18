@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -38,6 +39,10 @@ public class Definitions {
     ColorSensor jewelColor = null; //Used to detect jewel color
     ColorSensor teamColor = null; //Used to detect our team color from the balancing stone.
 
+    //Creates the i2c addresses for the color sensors that we set in the Modern Robotics Core Device Discovery application
+    I2cAddr i2cAddressJewelColor = I2cAddr.create8bit(0x3c);
+    I2cAddr i2cAddressTeamColor = I2cAddr.create8bit(0x4c);
+
     //Creates an instance of vuforia to read the pictographs
     VuforiaLocalizer vuforia = null;
 
@@ -69,6 +74,10 @@ public class Definitions {
         //Assigns the color sensors to their robot configuration name
         jewelColor = Map.colorSensor.get("jewelColor");
         teamColor = Map.colorSensor.get("teamColor");
+
+        //Assigns the isc addresses to the color sensors
+        jewelColor.setI2cAddress(i2cAddressJewelColor);
+        jewelColor.setI2cAddress(i2cAddressTeamColor);
 
         //Assigns all the values to for our vuforia instance
         cameraMonitorViewId = Map.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", Map.appContext.getPackageName());

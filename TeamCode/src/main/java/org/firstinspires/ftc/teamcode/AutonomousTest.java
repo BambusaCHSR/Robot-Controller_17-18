@@ -41,7 +41,7 @@ public class AutonomousTest extends OpMode {
         robot.hardwareMapInit(hardwareMap);
         robot.vuforiaInit();
         robot.servoInit();
-        robot.encoderInit();
+        //robot.encoderInit();
         robot.driveInitAuto();
 
         //relicTemplate.setName("relicVuMarkTemplate");

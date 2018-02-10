@@ -31,7 +31,7 @@ public class AutonomousFront extends LinearOpMode{
         robot.hardwareMapInit(hardwareMap);
         robot.vuforiaInit();
         robot.servoInit();
-        robot.encoderInit();
+        //robot.encoderInit();
 
         VuforiaTrackables relicTrackables = this.robot.vuforia.loadTrackablesFromAsset("RelicVuMark");
         VuforiaTrackable relicTemplate = relicTrackables.get(0);

@@ -1,19 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
 /**
- * Created by elija on 2/9/18.
- */
+ * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:21 PM.
+ **/
 
-@Autonomous(name = "tesssssssssssssssssssst", group = "bambusa")
+@Autonomous(name = "Front Autonomous", group = "bambusa")
 public class AutoTest extends LinearOpMode {
 
     private Definitions robot = new Definitions();
@@ -41,9 +36,6 @@ public class AutoTest extends LinearOpMode {
         //robot.vuforiaInit();
         robot.servoInit();
         robot.driveInitAuto();
-
-        if (robot.teamColor.red() > robot.teamColor.blue()) {teamC = "RED"; teamColor = true;}
-        else if (robot.teamColor.red() < robot.teamColor.blue()) {teamC = "BLUE"; teamColor = true;}
 
         //relicTemplate.setName("relicVuMarkTemplate");
 
@@ -115,6 +107,7 @@ public class AutoTest extends LinearOpMode {
                         .addData("", "Team Color")
                         .addData("Red", robot.teamColor.red())
                         .addData("Blue", robot.teamColor.blue());
+                telemetry.addData("Status", "Running");
                 telemetry.update();
             }
         }

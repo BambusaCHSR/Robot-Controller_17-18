@@ -93,7 +93,29 @@ public class AutoTest extends LinearOpMode {
                 }
             }
             else if (teamC.equals("BLUE")) {
-
+                if (!jewelGotten) {
+                    telemetry.addData("Jewel", "Not Gotten");
+                    robot.jewelDown();
+                    if (robot.jewelColor.red() > robot.jewelColor.blue()) {
+                        robot.forwardINCH(5, 0.3);
+                        robot.jewelUp();
+                        robot.backwardINCH(5,0.3);
+                        jewelGotten = true;
+                        telemetry.addData("JewelColor", "Red");
+                    } else if (robot.jewelColor.red() > robot.jewelColor.blue()) {
+                        robot.backwardINCH(5, 0.3);
+                        robot.jewelUp();
+                        robot.forwardINCH(5, 0.3);
+                        jewelGotten = true;
+                        telemetry.addData("JewelColor", "Blue");
+                    } else {
+                        robot.setDriveForward();
+                        robot.setPos(50);
+                        robot.setPower(0.2);
+                    }
+                } else {
+                    telemetry.addData("Jewel", "Gotten");
+                }
             }
 
                 /*if (jewelGotten) {

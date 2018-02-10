@@ -116,7 +116,7 @@ class Definitions {
     }
     /* Method used to calculate the position we want to robot to rotate to in degrees */
     private void posDeg(double degreesOfTurning) {
-        double robotDiamater = 19; //The diagonal (in inches) between two of the wheels of a 4 wheeled robot.
+        double robotDiamater = 24; //The diagonal (in inches) between two of the wheels of a 4 wheeled robot.
 
         //Formula we made which compares the ratio of the robot diameter to wheel diameter and multiplies conversion
         //of motor ticks to degrees. This lets us move close to exact degrees with our robot.

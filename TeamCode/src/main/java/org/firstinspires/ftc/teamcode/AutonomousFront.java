@@ -27,6 +27,7 @@ public class AutonomousFront extends LinearOpMode {
         robot.hardwareMapInit(hardwareMap);
         robot.servoInit();
         robot.driveInitAuto();
+        robot.closeArms();
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -70,13 +71,16 @@ public class AutonomousFront extends LinearOpMode {
                         robot.setPower(0.2);
                     }
                 }
-                /*else if (jewelGotten){
+                else if (jewelGotten && !movement){
                     telemetry.addData("Jewel", "Gotten");
-                    robot.forwardINCH(36, 0.5);
-                    robot.rotLeftDeg(90, 0.4);
-                    robot.backwardINCH(12, 0.5);
+                    robot.forwardINCH(42, 0.5);
+                    robot.rotRightDeg(90, 0.4);
+                    robot.forwardINCH(20, 0.5);
+                    robot.openArms();
+                    robot.backwardINCH(5, 0.2);
                     telemetry.addData("Move", "Moving");
-                }*/
+                    movement = true;
+                }
             }
             else if (teamC.equals("BLUE")) {
                 if (!jewelGotten) {
@@ -99,14 +103,16 @@ public class AutonomousFront extends LinearOpMode {
                         robot.setPos(50);
                         robot.setPower(0.2);
                     }
-                } /*else if (jewelGotten && !movement){
+                } else if (jewelGotten && !movement){
                     telemetry.addData("Jewel", "Gotten");
                     telemetry.addData("Move", "Moving");
-                    robot.backwardINCH(36, 0.5);
-                    robot.rotLeftDeg(90,0.4);
-                    robot.backwardINCH(12, 0.5);
-                    movement = false;
-                }*/
+                    robot.backwardINCH(42, 0.5);
+                    robot.rotRightDeg(90,0.4);
+                    robot.forwardINCH(20, 0.5);
+                    robot.openArms();
+                    robot.backwardINCH(5, 0.2);
+                    movement = true;
+                }
             }
 
             telemetry.addLine()

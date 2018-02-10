@@ -74,14 +74,16 @@ public class teleOp extends LinearOpMode {
             double DBR = -gamey + gamex - gamer;
             double DBL = gamey + gamex - gamer;
 
+            double slow = 1-gamepad1.right_trigger;
+
             /**------------------------------------------
              * Movement and any other actual robot actions
              * ------------------------------------------*/
             //Takes the variables from above and sets them to the drive motors to give them power.
-            robot.driveFrontRight.setPower(DFR); //Motor controller for front motors: AL00VXSF (Front Motors)
-            robot.driveFrontLeft.setPower(DFL);
-            robot.driveBackRight.setPower(DBR); //Motor controller for back motors: AL00VXUD (Back Motors)
-            robot.driveBackLeft.setPower(DBL);
+            robot.driveFrontRight.setPower(slow * DFR); //Motor controller for front motors: AL00VXSF (Front Motors)
+            robot.driveFrontLeft.setPower(slow * DFL);
+            robot.driveBackRight.setPower(slow * DBR); //Motor controller for back motors: AL00VXUD (Back Motors)
+            robot.driveBackLeft.setPower(slow * DBL);
 
             telemetry.addData("", DFR).addData("", DFL).addData("",DBR).addData("", DBL);
             telemetry.addLine().addData("",robot.driveFrontRight.getPower()).addData("", robot.driveFrontLeft.getPower()).addData("", robot.driveBackRight.getPower()).addData("", robot.driveBackLeft.getPower());

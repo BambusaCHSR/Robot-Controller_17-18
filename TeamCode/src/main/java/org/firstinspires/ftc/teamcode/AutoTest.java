@@ -26,13 +26,6 @@ public class AutoTest extends LinearOpMode {
     private String whichJewel = null;
     private int pictograph = 0;
 
-    //private VuforiaTrackables relicTrackables = this.robot.vuforia.loadTrackablesFromAsset("RelicVuMark");
-    //private VuforiaTrackable relicTemplate = relicTrackables.get(0);
-
-    //RelicRecoveryVuMark center = RelicRecoveryVuMark.CENTER;
-    //RelicRecoveryVuMark left = RelicRecoveryVuMark.LEFT;
-    //RelicRecoveryVuMark right = RelicRecoveryVuMark.RIGHT;
-
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry.addData("Status", "Initializing");
@@ -43,7 +36,9 @@ public class AutoTest extends LinearOpMode {
         robot.servoInit();
         robot.driveInitAuto();
 
-        //relicTemplate.setName("relicVuMarkTemplate");
+        VuforiaTrackables relicTrackables = this.robot.vuforia.loadTrackablesFromAsset("RelicVuMark");
+        VuforiaTrackable relicTemplate = relicTrackables.get(0);
+        relicTemplate.setName("relicVuMarkTemplate");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -51,10 +46,12 @@ public class AutoTest extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        relicTrackables.activate();
+
         while (opModeIsActive()) {
             telemetry.addData("Status", "Running");
 
-            //RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
+            RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
             if (!teamColor) {
                 if (robot.teamColor.red() > robot.teamColor.blue()) {
@@ -92,13 +89,9 @@ public class AutoTest extends LinearOpMode {
 
                 if (jewelGotten && !rotation) {
                     telemetry.addData("Pictograph", "Looking For Pictograph");
-                    robot.rotRightDeg(10,0.3);
-                    robot.rotLeftDeg(20,0.3);
-                    robot.rotRightDeg(10,0.3);
-
-                    //if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
-                    //else if (vuMark == RelicRecoveryVuMark.CENTER) pictograph = 2;
-                    //else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;
+                    if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
+                    else if (vuMark == RelicRecoveryVuMark.CENTER) pictograph = 2;
+                    else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;
 
                     rotation = true;
                 }
@@ -132,7 +125,6 @@ public class AutoTest extends LinearOpMode {
                 }
                 else if (movementDone) {
                     telemetry.addData("Status", "Autonomous Done");
-                    wait(1000);
                     break;
                 }
             }

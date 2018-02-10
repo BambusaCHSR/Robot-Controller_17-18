@@ -18,11 +18,12 @@ public class AutoTest extends LinearOpMode {
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime();
 
+    private boolean movementDone = false;
     private boolean jewelGotten = false;
-    private String teamC = null;
-    private String whichJewel = null;
     private boolean rotation = false;
     private boolean teamColor = false;
+    private String teamC = null;
+    private String whichJewel = null;
     private int pictograph = 0;
 
     //private VuforiaTrackables relicTrackables = this.robot.vuforia.loadTrackablesFromAsset("RelicVuMark");
@@ -51,6 +52,7 @@ public class AutoTest extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
+            telemetry.addData("Status", "Running");
 
             //RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
@@ -63,9 +65,7 @@ public class AutoTest extends LinearOpMode {
                     teamColor = true;
                 } else if (robot.teamColor.red() == 0 && robot.teamColor.blue() == 0)
                     telemetry.addData("Team Color", "Finiding Team Color");
-            } else {
-                telemetry.addData("Team Color", "is: " + teamC);
-            }
+            } else telemetry.addData("Team Color", "is: " + teamC);
 
             if (teamC.equals("RED")) {
                 if (!jewelGotten) {
@@ -88,10 +88,57 @@ public class AutoTest extends LinearOpMode {
                         robot.setPos(50);
                         robot.setPower(0.2);
                     }
-                } else {
-                    telemetry.addData("Jewel", "Gotten");
+                } else telemetry.addData("Jewel", "Gotten");
+
+                if (jewelGotten && !rotation) {
+                    telemetry.addData("Pictograph", "Looking For Pictograph");
+                    robot.rotRightDeg(10,0.3);
+                    robot.rotLeftDeg(20,0.3);
+                    robot.rotRightDeg(10,0.3);
+
+                    //if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
+                    //else if (vuMark == RelicRecoveryVuMark.CENTER) pictograph = 2;
+                    //else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;
+
+                    rotation = true;
+                }
+                else telemetry.addData("Pictograph","Waiting for jewel");
+
+                if (jewelGotten && rotation && !movementDone) {
+                    if (pictograph == 1) {
+                        robot.forwardINCH(44, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(22, 0.5);
+                        robot.openArms();
+                        robot.backwardINCH(4, 0.2);
+                    } else if (pictograph == 2) {
+                        robot.forwardINCH(36, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(22, 0.5);
+                        robot.openArms();
+                        robot.backwardINCH(4, 0.2);
+                    } else if (pictograph == 3) {
+                        robot.forwardINCH(28, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(22, 0.5);
+                        robot.openArms();
+                        robot.backwardINCH(4, 0.2);
+                    } else {
+                        robot.forwardINCH(36, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(12, 0.5);
+                        movementDone = true;
+                    }
+                }
+                else if (movementDone) {
+                    telemetry.addData("Status", "Autonomous Done");
+                    wait(1000);
+                    break;
                 }
             }
+
+
+
             else if (teamC.equals("BLUE")) {
                 if (!jewelGotten) {
                     telemetry.addData("Jewel", "Not Gotten");
@@ -102,7 +149,7 @@ public class AutoTest extends LinearOpMode {
                         robot.backwardINCH(5,0.3);
                         jewelGotten = true;
                         telemetry.addData("JewelColor", "Red");
-                    } else if (robot.jewelColor.red() > robot.jewelColor.blue()) {
+                    } else if (robot.jewelColor.red() < robot.jewelColor.blue()) {
                         robot.backwardINCH(5, 0.3);
                         robot.jewelUp();
                         robot.forwardINCH(5, 0.3);
@@ -113,57 +160,73 @@ public class AutoTest extends LinearOpMode {
                         robot.setPos(50);
                         robot.setPower(0.2);
                     }
-                } else {
-                    telemetry.addData("Jewel", "Gotten");
-                }
-            }
+                } else telemetry.addData("Jewel", "Gotten");
 
-                /*if (jewelGotten) {
+                if (jewelGotten && !rotation) {
                     telemetry.addData("Pictograph", "Looking For Pictograph");
                     robot.rotRightDeg(10,0.3);
                     robot.rotLeftDeg(20,0.3);
                     robot.rotRightDeg(10,0.3);
 
-                    if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
-                    else if (vuMark == RelicRecoveryVuMark.CENTER) pictograph = 2;
-                    else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;
+                    //if (vuMark == RelicRecoveryVuMark.LEFT) pictograph = 1;
+                    //else if (vuMark == RelicRecoveryVuMark.CENTER) pictograph = 2;
+                    //else if (vuMark == RelicRecoveryVuMark.RIGHT) pictograph = 3;
 
-                    rotation = true;
-                } else telemetry.addData("Pictograph","Waiting for jewel");*/
+                        if (pictograph > 0) {
+                            rotation = true;
+                        } else {
+                            rotation = false;
+                        }
+                }
+                else telemetry.addData("Pictograph","Waiting for jewel");
 
-                /*if (teamC.equals("RED") && jewelGotten && rotation) {
-                    if (whichJewel.equals("LEFT")) {
-                        if (pictograph == 1) {
-                            robot.forwardINCH(39,0.5);
-                        }
-                        else if (pictograph == 2) {
-                            robot.forwardINCH(31,0.5);
-                        }
-                        else if (pictograph == 3) {
-                            robot.forwardINCH(23, 0.5);
-                        }
-                        else {
-                            robot.forwardINCH(31,0.5);
-                        }
-                     }
-                    else if (whichJewel.equals("RIGHT")) {
-                        if (pictograph == 1) {
-                            robot.forwardINCH(49,0.5);
-                        }
-                        else if (pictograph == 2) {
-                            robot.forwardINCH(41,0.5);
-                        }
-                        else if (pictograph == 3) {
-                            robot.forwardINCH(33, 0.5);
-                        }
-                        else {
-                            robot.forwardINCH(41,0.5);
-                        }
+                if (jewelGotten && rotation) {
+                    if (pictograph == 1) {
+                        robot.forwardINCH(39,0.5);
                     }
+                    else if (pictograph == 2) {
+                        robot.forwardINCH(31,0.5);
+                    }
+                    else if (pictograph == 3) {
+                        robot.forwardINCH(23, 0.5);
+                    }
+                    else {
+                        robot.forwardINCH(31,0.5);
+                    }
+                }
 
-                } else if (teamC.equals("BLUE")) {
-
-                }*/
+                if (jewelGotten && rotation && !movementDone) {
+                    if (pictograph == 1) {
+                        robot.backwardINCH(44, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(22, 0.5);
+                        robot.openArms();
+                        robot.backwardINCH(4, 0.2);
+                    } else if (pictograph == 2) {
+                        robot.backwardINCH(36, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(22, 0.5);
+                        robot.openArms();
+                        robot.backwardINCH(4, 0.2);
+                    } else if (pictograph == 3) {
+                        robot.backwardINCH(28, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(22, 0.5);
+                        robot.openArms();
+                        robot.backwardINCH(4, 0.2);
+                    } else {
+                        robot.backwardINCH(36, 0.5);
+                        robot.rotRightDeg(90,0.4);
+                        robot.forwardINCH(12, 0.5);
+                        movementDone = true;
+                    }
+                }
+                else if (movementDone) {
+                    telemetry.addData("Status", "Autonomous Done");
+                    wait(1000);
+                    break;
+                }
+            }
 
                 telemetry.addLine()
                         .addData("", "Jewel Color")

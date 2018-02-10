@@ -99,9 +99,8 @@ public class Definitions {
 
     /* Method to initialize the encoders in autonomous */
     public void driveInitAuto() {
-        useEncoders();
-        runModePos();
         resetEncoders();
+        runModePos();
     }
 
     /* Used in driveInitAuto() to tell the motors to use encoders */
@@ -110,6 +109,12 @@ public class Definitions {
         driveFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    private void dontUseEncoders() {
+        driveFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveBackRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        driveBackLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /* Called once at the beginning of our autonomous inside of driveINitAuto() to make sure the encoders are 0ed out */
@@ -133,7 +138,7 @@ public class Definitions {
         /*Calculating the ratio between the circumference of the wheels and the encoder ticks to move
         the right amount forward in inches. It is cast to Int because encoders only take an int value while
         we still want the higher acuracy of the double value of pos and the decimal value of PI */
-        int toInch = (int) (pos/(wheelDiamater*Math.PI));
+        int toInch = (int) (pos*(motorTicks/(wheelDiamater*Math.PI)));
 
         //Sets the target position of the motors to the current position plus the newly calculated position.
         //This lets us only reset the encoders once (This is executed wrong but we did not have time to fix it)
@@ -196,7 +201,6 @@ public class Definitions {
     public void forwardINCH(double posInINCH, double powerStart) {
         setDriveForward();
         posInch(posInINCH);
-        runToPos();
         setPower(powerStart);
         waitForDriveMotorStop();
         setPower(0);
@@ -233,7 +237,7 @@ public class Definitions {
     }
     /*Method that we use to set the jewel knocker to the down position */
     public void jewelDown() {
-        jewelKnocker.setPosition(0.6);
+        jewelKnocker.setPosition(0.75);
     }
     /*Method that we use to set the jewel knocker to the up position */
     public void jewelUp() {

@@ -246,17 +246,17 @@ public class Definitions {
 
     //Sets the motors to drive forward
     public void setDriveForward() {
-        driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
-        driveBackRight.setDirection(DcMotor.Direction.REVERSE);
-        driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
-    }
-    //sets the motors to drive backward
-    public void setDriveBackward() {
         driveFrontRight.setDirection(DcMotor.Direction.FORWARD);
         driveFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         driveBackRight.setDirection(DcMotor.Direction.FORWARD);
         driveBackLeft.setDirection(DcMotor.Direction.REVERSE);
+    }
+    //sets the motors to drive backward
+    public void setDriveBackward() {
+        driveFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        driveFrontLeft.setDirection(DcMotor.Direction.FORWARD);
+        driveBackRight.setDirection(DcMotor.Direction.REVERSE);
+        driveBackLeft.setDirection(DcMotor.Direction.FORWARD);
     }
     //sets the motors to rotate left
     public void setRotLeft() {

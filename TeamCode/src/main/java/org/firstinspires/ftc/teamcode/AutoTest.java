@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 public class AutoTest extends LinearOpMode {
 
     private Definitions robot = new Definitions();
+    private org.firstinspires.ftc.teamcode.mecanumdrive.Definitions robot2 = new org.firstinspires.ftc.teamcode.mecanumdrive.Definitions();
     private ElapsedTime runtime = new ElapsedTime();
 
     private boolean movementDone = false;

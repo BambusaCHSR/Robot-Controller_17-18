@@ -14,56 +14,82 @@ public class Definitions {
     public DcMotor driveLeft = null;
     public DcMotor driveRight = null;
 
-    int WD = 0;
-    double RD = 0;
-    int MT = 0;
+    private int WD = 0;
+    private double RD = 0;
+    private int MT = 0;
+    private int motors = 0;
+    private boolean hardwareMapInt = false;
 
-    void mecanumOmniMap(HardwareMap Map) {
+    public void mecanumOmniMap(HardwareMap Map) {
         frontLeft = Map.dcMotor.get("frontLeft");
         frontRight = Map.dcMotor.get("frontRight");
         backLeft = Map.dcMotor.get("backLeft");
         backRight = Map.dcMotor.get("backRight");
+
+        motors = 4;
+        hardwareMapInt = true;
     }
 
-    void tankDifferentialMap(HardwareMap Map) {
-        driveLeft = Map.dcMotor.get("left");
-        driveRight = Map.dcMotor.get("right");
+    public void tankDifferentialMap(HardwareMap Map) {
+        driveLeft = Map.dcMotor.get("driveLeft");
+        driveRight = Map.dcMotor.get("driveRight");
+
+        motors = 2;
+        hardwareMapInt = true;
     }
 
-    void robotDetails(int wheelDiamater, double robotDiamater, int motorTicks) {
+    public void robotDetails(int wheelDiamater, double robotDiamater, int motorTicks) {
         WD = wheelDiamater;
         RD = robotDiamater;
         MT = motorTicks;
     }
 
-    void resetDriveEncoders() {
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        driveLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void resetDriveEncoders() {
+        if (motors == 4) {
+            frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+        else if (motors == 2) {
+            driveLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            driveRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        }
+        else {
+            throw new IllegalArgumentException("No hardware map detected");
+        }
     }
 
-    void runWithoutEncoders() {
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        driveLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        driveRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    public void runWithoutEncoders() {
+        if (motors == 4) {
+            frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        else if (motors == 2) {
+            driveLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            driveRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        else {
+            throw new IllegalArgumentException("No hardware map detected");
+        }
     }
 
-    void runToPosition() {
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        driveLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        driveRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    public void runToPosition() {
+        if (motors == 4) {
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        else if (motors == 2) {
+            driveLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            driveRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        else {
+            throw new IllegalArgumentException("No hardware map detected");
+        }
     }
 
     void teleOpMotorInit() {
@@ -81,6 +107,10 @@ public class Definitions {
         frontRight.setPower(-y - x + r);
         backLeft.setPower(y + x + r);
         backRight.setPower(-y + x + r);
+
+        if (!hardwareMapInt) {
+            throw new IllegalArgumentException("No hardware map detected");
+        }
     }
 
     void omniDrive(double x, double y, double r) {
@@ -89,31 +119,30 @@ public class Definitions {
         backLeft.setPower(y - x + r);
         backRight.setPower(-y - x + r);
     }
-    void tankDriveTwoMotor(double Left, double Right) {
+    void tankDrive(double Left, double Right) {
         driveLeft.setPower(Left);
         driveRight.setPower(Right);
     }
 
-    void arcadeDrive(double x, double r) {
+    public void arcadeDrive(double x, double r) {
         driveLeft.setPower(x + r);
         driveRight.setPower(-x + r);
     }
 
-    void setpower(double power) {
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
-
-        driveLeft.setPower(power);
-        driveRight.setPower(power);
+    public void setpower(double power) {
+        if (motors == 4) {
+            frontLeft.setPower(power);
+            frontRight.setPower(power);
+            backLeft.setPower(power);
+            backRight.setPower(power);
+        }
+        else if (motors == 2) {
+            driveLeft.setPower(power);
+            driveRight.setPower(power);
+        }
     }
 
-    void setPositionInch(double inches, double wheelDiamaterInch, int motorTicks) {
-        int pos = (int) (inches*(motorTicks/(wheelDiamaterInch*Math.PI)));
-    }
-
-    void moveMecanum(String direction, double power, double positionInch) {
+    public void moveMecanum(String direction, double power, double positionInch) {
         int pos = (int) (positionInch*(MT/(WD*Math.PI)));
         if (direction.equals("FORWARD")) {
             frontLeft.setTargetPosition(frontLeft.getCurrentPosition() + pos);
@@ -122,13 +151,126 @@ public class Definitions {
             backRight.setTargetPosition(backRight.getCurrentPosition() - pos);
         }
         else if (direction.equals("BACKWARD")) {
-
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() - pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() + pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() - pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() + pos);
         }
         else if (direction.equals("LEFT")) {
-
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() + pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() + pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() - pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() - pos);
         }
         else if (direction.equals("RIGHT")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() - pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() - pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() + pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() + pos);
+        }
 
+        setpower(power);
+    }
+    public void moveMecanum(String direction, double positionInch) {
+        this.moveMecanum(direction,0.5,positionInch);
+    }
+
+    public void moveOmniWheel(String direction, double power, double positionInch) {
+        int pos = (int) (Math.sqrt(2) * (positionInch*(MT/(WD*Math.PI))));
+        if (direction.equals("FORWARD")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() + pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() - pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() + pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() - pos);
+        }
+        else if (direction.equals("BACKWARD")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() - pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() + pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() - pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() + pos);
+        }
+        else if (direction.equals("LEFT")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() - pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() - pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() + pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() + pos);
+        }
+        else if (direction.equals("RIGHT")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() + pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() + pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() - pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() - pos);
+        }
+
+        setpower(power);
+    }
+    public void moveOmniWheel(String direction, double positionInch) {
+        this.moveOmniWheel(direction,0.5,positionInch);
+    }
+
+    public void moveTankArcade(String direction, double power, double positionInch) {
+        int pos = (int) (positionInch * (MT / (WD * Math.PI)));
+        if (direction.equals("FOWARD")) {
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() + pos);
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() - pos);
+        }
+        else if (direction.equals("BACKWARD")) {
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() - pos);
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() + pos);
+        }
+
+        setpower(power);
+    }
+    public void moveTankArcade(String direction, double positionInch) {
+        this.moveTankArcade(direction,0.5,positionInch);
+    }
+
+    public void rotateOmniMecanum(String direction, double power, double positionDegrees) {
+        int pos = (int) ((RD / WD) * (MT / 360) * positionDegrees);
+        if (direction.equals("LEFT")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() - pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() - pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() - pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() - pos);
+        }
+        else if (direction.equals("RIGHT")) {
+            frontLeft.setTargetPosition(frontLeft.getCurrentPosition() + pos);
+            frontRight.setTargetPosition(frontRight.getCurrentPosition() + pos);
+            backLeft.setTargetPosition(backLeft.getCurrentPosition() + pos);
+            backRight.setTargetPosition(backRight.getCurrentPosition() + pos);
+        }
+
+        setpower(power);
+    }
+    public void rotateOmniMecanum(String direction, double positionInch) {
+        this.rotateOmniMecanum(direction, 0.5, positionInch);
+    }
+
+    public void rotateTankArcade(String direction, double power, double positionDegrees) {
+        int pos = (int) ((RD / WD) * (MT / 360) * positionDegrees);
+        if (direction.equals("LEFT")) {
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() - pos);
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() - pos);
+        }
+        else if (direction.equals("RIGHT")) {
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() + pos);
+            driveLeft.setTargetPosition(driveLeft.getCurrentPosition() + pos);
+        }
+
+        setpower(power);
+    }
+    public void rotateTankArcade(String direction, double positionInch) {
+        this.rotateTankArcade(direction,0.5,positionInch);
+    }
+
+    public void waitForDriveMotorsStop() {
+        while (true) {
+            if (motors == 4) {
+                if (!(frontLeft.isBusy()) && !(frontRight.isBusy()) && !(backLeft.isBusy()) && !(backRight.isBusy())) break;
+            }
+            else if (motors == 2) {
+                if (!(driveLeft.isBusy()) && !(driveRight.isBusy())) break;
+            }
         }
     }
 }

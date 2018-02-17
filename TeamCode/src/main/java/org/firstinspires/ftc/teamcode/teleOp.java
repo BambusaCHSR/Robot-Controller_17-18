@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * Created by Elijah Sauder for Bambusa in ftc_app, on 01/27/2018.12:14 AM.
- */
+ **/
 //Tells the app that this is a TeleOp and not autonomous or a generic class
 @TeleOp(name = "test", group = "bambusa")
 //Creates the class which extends LinearOpMode so that we can use the pre made functions provided us
@@ -36,6 +38,9 @@ public class teleOp extends LinearOpMode {
         //Initializes the servos using the method from the definitions file
         robot.servoInit();
 
+        robot.lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         //Prints out on the driver station that the robot is fully initialized
         telemetry.addData("Status", "Initilized");
         telemetry.update();
@@ -47,7 +52,7 @@ public class teleOp extends LinearOpMode {
 
         //Starts the loop once the driver hits the play button
         while (opModeIsActive() && !STOP) { //The !STOP is the emergency stop which is assigned
-                                            //to the back buttons on the driver controllers
+            //to the back buttons on the driver controllers
             /**-----------------
              * Gamepad Variables
              * ------------------*/
@@ -67,31 +72,49 @@ public class teleOp extends LinearOpMode {
             //Emergency stop gamepad inputs
             boolean back = gamepad1.back && gamepad2.back;
 
+            double slow = Range.clip(1 - gamepad1.right_trigger, -1, 1);
+
             /**Drive values**/
             //sets the the variables for the motor power to the following equations and clips it to 1.
-            double DFR = -gamey - gamex - gamer; //This will clip the outputs to the motors
-            double DFL = gamey - gamex - gamer;//to 1 making sure they don't burn out.
-            double DBR = -gamey + gamex - gamer;
-            double DBL = gamey + gamex - gamer;
-
-            double slow = 1-gamepad1.right_trigger;
+            double DFR = Range.clip((-gamey - gamex - gamer) * slow, -1, 1); //This will clip the outputs to the motors
+            double DFL = Range.clip((gamey - gamex - gamer) * slow, -1, 1);//to 1 making sure they don't burn out.
+            double DBR = Range.clip((-gamey + gamex - gamer) * slow, -1, 1);
+            double DBL = Range.clip((gamey + gamex - gamer) * slow, -1, 1);
 
             /**------------------------------------------
              * Movement and any other actual robot actions
              * ------------------------------------------*/
-            //Takes the variables from above and sets them to the drive motors to give them power.
-            robot.driveFrontRight.setPower(slow * DFR); //Motor controller for front motors: AL00VXSF (Front Motors)
-            robot.driveFrontLeft.setPower(slow * DFL);
-            robot.driveBackRight.setPower(slow * DBR); //Motor controller for back motors: AL00VXUD (Back Motors)
-            robot.driveBackLeft.setPower(slow * DBL);
+            robot.driveFrontRight.setPower(DFR); //Motor controller for front motors: AL00VXSF (Front Motors)
+            robot.driveFrontLeft.setPower(DFL);
+            robot.driveBackRight.setPower(DBR); //Motor controller for back motors: AL00VXUD (Back Motors)
+            robot.driveBackLeft.setPower(DBL);
 
-            telemetry.addData("", DFR).addData("", DFL).addData("",DBR).addData("", DBL);
-            telemetry.addLine().addData("",robot.driveFrontRight.getPower()).addData("", robot.driveFrontLeft.getPower()).addData("", robot.driveBackRight.getPower()).addData("", robot.driveBackLeft.getPower());
+            telemetry.addLine()
+                    .addData("","Drive Power")
+                    .addData("", DFR)
+                    .addData("", DFL)
+                    .addData("", DBR)
+                    .addData("", DBL);
+            telemetry.addLine()
+                    .addData("", "Motor Power")
+                    .addData("", robot.driveFrontRight.getPower())
+                    .addData("", robot.driveFrontLeft.getPower())
+                    .addData("", robot.driveBackRight.getPower())
+                    .addData("", robot.driveBackLeft.getPower());
+
             //Sets the movement of the glyph lifter to the two bumpers on the gamepad
-            if (bumpR && bumpL) robot.lift.setPower(0); //Adds a safety in case the gamepad operator presses both bumpers
-            else if (bumpR) robot.lift.setPower(-0.5); //Makes sure that only one of the bumpers is being pressed for it to raise.
-            else if (bumpL) robot.lift.setPower(0.5); //tells the robot to do nothing with the glyph lifter if no bumpers are pressed.
-            else robot.lift.setPower(0); //Makes sure that if something other then what is given is done it doesn't move
+            if (robot.lift.getCurrentPosition() <= 0 && bumpL) {
+                robot.lift.setPower(0);
+            } else if (robot.lift.getCurrentPosition() >= 4100 && bumpR) {
+                robot.lift.setPower(0);
+            } else {
+                if (bumpR && bumpL) robot.lift.setPower(0); //Adds a safety in case the gamepad operator presses both bumpers
+                else if (bumpR) robot.lift.setPower(0.5); //Makes sure that only one of the bumpers is being pressed for it to raise.
+                else if (bumpL) robot.lift.setPower(-0.5); //tells the robot to do nothing with the glyph lifter if no bumpers are pressed.
+                else robot.lift.setPower(0); //Makes sure that if something other then what is given is done it doesn't move
+            }
+
+            telemetry.addData("lifter", robot.lift.getCurrentPosition());
 
             //Toggle for the glyph grabber
             if (toggle && a) { //If the toggle is off and the user is pressing the b button start the toggle, start the if statement
@@ -100,31 +123,24 @@ public class teleOp extends LinearOpMode {
                     servos= false; //Sets servos to false to make sure they don't try and close twice
                     toggleon = true; //Sets toggle on to true so that we can test for that later
                     robot.closeArms(); //Closes the glyph grab arms
-                }
-                else { //if the servo is closed when you run the toggle open the grippers
+                } else { //if the servo is closed when you run the toggle open the grippers
                     servos= true; //Sets the servo variable to true, saying the grippers are closed in preparation for the next toggle press.
                     toggleon = false; //sets toggleon to false so that we know that the toggle is not active
                     robot.openArms(); //opens the robot arms
                 }
             } else if (!a) {    //If you aren't pressing the toggle button make sure the toggle variable is set to false
-                                //to make sure the toggle isn't activated accidentally.
+                                //to make sure the toggle isn't activated accidentally
                 toggle = true;
             }
-
             //Individual movement of each glyph grab arm
             //This is where we test for wether the toggle is on or off to make sure we don't run this
             //while the toggle is running
             /* Opens and closes the left arm if you press x on the gameoad */
             if (gamepad2.x && !toggleon) robot.glyphGrabLeft.setPosition(0.7);
             else if (!gamepad2.x && !toggleon)robot.glyphGrabLeft.setPosition(1);
-
             /* Opens and closes the right arm if you press b on the gamepad */
             if (gamepad2.b && !toggleon) robot.glyphGrabRight.setPosition(0.3);
             else if (!gamepad2.b && !toggleon)robot.glyphGrabRight.setPosition(0);
-
-
-            /** testing the rotation by degrees**/
-            //if (gamepad1.a) robot.rotLeftDeg(90, 0.7); //(Not being used atm)
 
             /**Emergency Stop**/
             STOP = back;

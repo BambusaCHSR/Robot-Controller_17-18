@@ -73,10 +73,10 @@ public class AutonomousBack extends LinearOpMode {
                 } else if (jewelGotten && !movement){
                     telemetry.addData("Jewel", "Gotten");
                     telemetry.addData("Move", "Moving");
-                    robot.rotLeftDeg(29.7,0.3);
-                    robot.backwardINCH(24.2, 0.5);
-                    robot.rotRightDeg(29.7,0.4);
-                    robot.forwardINCH(21, 0.5);
+                    robot.rotLeftDeg(26.6,0.3);
+                    robot.backwardINCH(26.8, 0.5);
+                    robot.rotRightDeg(26.6,0.4);
+                    robot.forwardINCH(24, 0.5);
                     robot.openArms();
                     robot.backwardINCH(8, 0.2);
                     movement = true;
@@ -107,10 +107,10 @@ public class AutonomousBack extends LinearOpMode {
                 } else if (jewelGotten && !movement){
                     telemetry.addData("Jewel", "Gotten");
                     telemetry.addData("Move", "Moving");
-                    robot.rotRightDeg(29.7,0.3);
-                    robot.backwardINCH(24.2, 0.5);
-                    robot.rotRightDeg(150.3,0.4);
-                    robot.forwardINCH(21, 0.5);
+                    robot.rotRightDeg(26.6,0.3);
+                    robot.backwardINCH(26.8, 0.5);
+                    robot.rotRightDeg(153.4,0.4);
+                    robot.forwardINCH(24, 0.5);
                     robot.openArms();
                     robot.backwardINCH(8, 0.2);
                     movement = true;

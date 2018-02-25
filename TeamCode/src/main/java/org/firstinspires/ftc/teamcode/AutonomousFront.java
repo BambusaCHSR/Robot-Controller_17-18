@@ -75,7 +75,7 @@ public class AutonomousFront extends LinearOpMode {
                     telemetry.addData("Jewel", "Gotten");
                     robot.forwardINCH(42, 0.5);
                     robot.rotRightDeg(90, 0.4);
-                    robot.forwardINCH(20, 0.5);
+                    robot.forwardINCH(24, 0.5);
                     robot.openArms();
                     robot.backwardINCH(5, 0.2);
                     telemetry.addData("Move", "Moving");
@@ -108,7 +108,7 @@ public class AutonomousFront extends LinearOpMode {
                     telemetry.addData("Move", "Moving");
                     robot.backwardINCH(42, 0.5);
                     robot.rotRightDeg(90,0.4);
-                    robot.forwardINCH(25, 0.5);
+                    robot.forwardINCH(24, 0.5);
                     robot.openArms();
                     robot.backwardINCH(5, 0.2);
                     movement = true;

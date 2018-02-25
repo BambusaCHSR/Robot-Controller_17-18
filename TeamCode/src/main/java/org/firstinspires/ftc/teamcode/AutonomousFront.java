@@ -137,6 +137,8 @@ public class AutonomousFront extends LinearOpMode {
             telemetry.addData("Status", "Running");
             telemetry.update();
 
+            //If for some reason the robot controller doesn't properly read the stop request from
+            //the driver station end the loop
             if (!opModeIsActive()) {
                 break;
             }

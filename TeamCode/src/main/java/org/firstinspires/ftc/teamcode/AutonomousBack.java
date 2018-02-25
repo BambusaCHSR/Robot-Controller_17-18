@@ -15,6 +15,7 @@ public class AutonomousBack extends LinearOpMode {
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime();
 
+    private boolean movement = false;
     private boolean jewelGotten = false;
     private boolean teamColor = false;
     private String teamC = null;
@@ -69,12 +70,16 @@ public class AutonomousBack extends LinearOpMode {
                         robot.setPos(50);
                         robot.setPower(0.2);
                     }
-                } else telemetry.addData("Jewel", "Gotten");
-
-                if (jewelGotten) {
-                    robot.rotLeftDeg(30,0.5);
-                    robot.forwardINCH(40, 0.5);
-                    robot.rotLeftDeg(30, 0.4);
+                } else if (jewelGotten && !movement){
+                    telemetry.addData("Jewel", "Gotten");
+                    telemetry.addData("Move", "Moving");
+                    robot.rotLeftDeg(29.7,0.3);
+                    robot.backwardINCH(24.2, 0.5);
+                    robot.rotRightDeg(29.7,0.4);
+                    robot.forwardINCH(21, 0.5);
+                    robot.openArms();
+                    robot.backwardINCH(8, 0.2);
+                    movement = true;
                 }
             }
 
@@ -97,14 +102,18 @@ public class AutonomousBack extends LinearOpMode {
                     } else {
                         robot.setDriveForward();
                         robot.setPos(50);
-                        robot.setPower(0.2);
+                        robot.setPower(0.1);
                     }
-                } else telemetry.addData("Jewel", "Gotten");
-
-                if (jewelGotten) {
-                    robot.rotLeftDeg(30,0.5);
-                    robot.forwardINCH(40, 0.5);
-                    robot.rotRightDeg(30, 0.4);
+                } else if (jewelGotten && !movement){
+                    telemetry.addData("Jewel", "Gotten");
+                    telemetry.addData("Move", "Moving");
+                    robot.rotRightDeg(29.7,0.3);
+                    robot.backwardINCH(24.2, 0.5);
+                    robot.rotRightDeg(150.3,0.4);
+                    robot.forwardINCH(21, 0.5);
+                    robot.openArms();
+                    robot.backwardINCH(8, 0.2);
+                    movement = true;
                 }
             }
 

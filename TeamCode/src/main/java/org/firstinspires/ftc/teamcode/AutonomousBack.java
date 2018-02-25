@@ -8,9 +8,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /**
  * Created by Elijah Sauder for Bambusa in Robot-Controller_17-18, on 01/15/2018.7:21 PM.
  **/
-@Disabled
 @Autonomous(name = "BackAutonomous", group = "bambusa")
 public class AutonomousBack extends LinearOpMode {
+
+    /** ============================================================================
+     * Everything from here down is practically the same as AutonomouFront just with
+     * changed values since we are in a different position on the field
+     * =========================================================================== */
 
     private Definitions robot = new Definitions();
     private ElapsedTime runtime = new ElapsedTime();
